@@ -19,12 +19,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #fafafa;
     min-height: 100%;
     min-width: 100%;
-  }
-
-  p,
-  label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
+    overflow: hidden;
   }
 `;
 
