@@ -1,7 +1,7 @@
 import { SET_LOADING, UPDATE_ALERT, UPDATE_CONFIRM } from "./constants";
 
 export const initialState = {
-  loading: true,
+  loading: false,
   alert: {
     open: false,
     title: '',

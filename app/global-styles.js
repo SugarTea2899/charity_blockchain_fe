@@ -1,6 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Lobster';
+    src: url('/Lobster-Regular.ttf');
+  }
+
   html,
   body {
     height: 100%;

@@ -19,7 +19,7 @@ export default function MyAppBar() {
       <AppBar position="static">
         <Toolbar>
           <p onClick={() => history.replace('/')} className={classes.logo}>
-            My Wallet
+            T - Charity
           </p>
           <div className={classes.rightSection}>
             {isAccessed && (
@@ -61,10 +61,10 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
   },
   logo: {
-    fontFamily: 'Freckle',
+    fontFamily: 'Lobster',
     color: 'white',
     width: '100%',
-    fontSize: '1.2rem',
+    fontSize: '1.3rem',
     cursor: 'pointer',
   },
   rightSection: {

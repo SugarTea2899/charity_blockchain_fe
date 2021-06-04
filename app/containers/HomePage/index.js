@@ -1,18 +1,57 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- */
+import React, { memo } from 'react';
+import { Grid, makeStyles } from '@material-ui/core';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import ScrollableTabsButtonAuto from './TabSection';
+import MyAppBar from '../../components/MyAppBar';
 
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-
-export default function HomePage() {
+export const HomePage = () => {
+  const classes = useStyle();
   return (
-    <div>
-      <FormattedMessage {...messages.header} />
+    <div className={classes.container}>
+      <MyAppBar />
+      <Grid container>
+        <Grid container item xs={4} />
+        <Grid container item xs={4} justify='center'>
+          <img className={classes.logo} src='/logo.png' />
+        </Grid>
+        <Grid container item xs={4} />
+      </Grid>
+      <Grid container>
+        <Grid container item xs={4} />
+        <Grid container item xs={4} >
+          <ScrollableTabsButtonAuto />
+        </Grid>
+        <Grid container item xs={4} />
+      </Grid>
     </div>
   );
-}
+};
+
+const useStyle = makeStyles({
+  container: {
+    height: '100%',
+    width: '100%',
+  },
+  logo: {
+    width: '45%',
+    padding: '5% 0% 8% 0%'
+  }
+});
+
+const mapStateToProps = createStructuredSelector({});
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(HomePage);
