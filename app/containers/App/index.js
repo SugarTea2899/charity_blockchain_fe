@@ -10,6 +10,7 @@ import ConfirmAlert from '../../components/ConfirmAlert';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
+import { UserPage } from '../UserPage';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
@@ -22,6 +23,7 @@ export function App({ alert, confirmAlert }) {
       <ConfirmAlert {...confirmAlert} />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/user" component={UserPage} />
       </Switch>
       <GlobalStyle />
     </div>
