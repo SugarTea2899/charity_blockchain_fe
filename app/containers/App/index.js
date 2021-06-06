@@ -1,15 +1,16 @@
 import React, { memo } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
-import GlobalStyle from '../../global-styles';
 import { makeStyles } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import GlobalStyle from '../../global-styles';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Alert from '../../components/Alert';
 import ConfirmAlert from '../../components/ConfirmAlert';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
+import { ProjectPage } from '../ProjectPage';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
@@ -22,6 +23,7 @@ export function App({ alert, confirmAlert }) {
       <ConfirmAlert {...confirmAlert} />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/project" component={ProjectPage} />
       </Switch>
       <GlobalStyle />
     </div>
