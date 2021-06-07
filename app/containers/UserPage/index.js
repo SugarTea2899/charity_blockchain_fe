@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import MyAppBar from '../../components/MyAppBar';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import PaymentIcon from '@material-ui/icons/Payment';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import SendIcon from '@material-ui/icons/Send';
@@ -98,7 +99,7 @@ export const UserPage = () => {
             title="Charity Project"
             content=""
             helper="click to create charity project"
-            icon={<PaymentIcon className={classes.icon} />}
+            icon={<AddBoxIcon className={classes.icon} />}
           />
         </Grid>
       </Grid>

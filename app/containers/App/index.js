@@ -11,6 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
 import { UserPage } from '../UserPage';
+import { ExplorePage } from '../ExplorePage';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
@@ -24,6 +25,7 @@ export function App({ alert, confirmAlert }) {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/user" component={UserPage} />
+        <Route path="/explore" component={ExplorePage} />
       </Switch>
       <GlobalStyle />
     </div>
