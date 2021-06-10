@@ -1,18 +1,19 @@
 import React from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 
-const Information = ({ title, content, markBlue = false, customColor }) => {
+const Information = ({ title, content, markBlue = false, customColor, isBold = false }) => {
   const classes = useStyle();
   let contentColor = markBlue ? '#2196f3' : 'black';
   contentColor = customColor || contentColor;
-  
+  let bold = isBold ? 'bold' : '';
+
   return (
     <Grid container className={classes.container} >
-      <Grid container item xs={2} alignItems="center" alignContent='center'>
+      <Grid container item xs={3} alignItems="center" alignContent='center'>
         <Typography className={classes.title}>{title}</Typography>
       </Grid>
-      <Grid container item xs={10} alignItems="center" alignContent='center'>
-        <Typography className={classes.content} style={{ color: contentColor }}>
+      <Grid container item xs={9} alignItems="center" alignContent='center'>
+        <Typography className={classes.content} style={{ color: contentColor, fontWeight: bold }}>
           {content}
         </Typography>
       </Grid>
@@ -29,10 +30,10 @@ const useStyle = makeStyles({
     paddingRight: '1.5%'
   },
   title: {
-    fontSize: '1.1rem'
+    fontSize: '1rem'
   },
   content: {
-    fontSize: '1.1rem'
+    fontSize: '1rem'
   },
 });
 

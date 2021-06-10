@@ -6,6 +6,11 @@ const GlobalStyle = createGlobalStyle`
     src: url('/Lobster-Regular.ttf');
   }
 
+  @font-face {
+    font-family: 'Megante';
+    src: url('/SVN-Megante.otf');
+  }
+
   html,
   body {
     height: 100%;

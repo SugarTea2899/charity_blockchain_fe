@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { hideCharacter } from '../../utils/helpers';
 
-const Card = ({ title, icon, content, color, onClick, helper }) => {
+const MyCard = ({ title, icon, content, color, onClick, helper }) => {
   const classes = useStyle();
   const cursor = onClick ? 'pointer' : 'default';
   const handleClick = onClick ? onClick : () => {};
@@ -50,4 +50,4 @@ const useStyle = makeStyles({
   }
 });
 
-export default Card;
+export default MyCard;

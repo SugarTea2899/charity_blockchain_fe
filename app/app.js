@@ -29,6 +29,7 @@ import '!file-loader?name=[name].[ext]!./images/logo.png';
 import '!file-loader?name=[name].[ext]!./images/icon.png';
 import 'file-loader?name=.htaccess!./.htaccess';
 import '!file-loader?name=[name].[ext]!./fonts/Lobster-Regular.ttf';
+import '!file-loader?name=[name].[ext]!./fonts/SVN-Megante.otf';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './configureStore';

@@ -9,8 +9,8 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import SendIcon from '@material-ui/icons/Send';
-import Card from './Card';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MyCard from './MyCard';
 import MyList from '../../components/MyList';
 import DonateItem from '../../components/DonateItem';
 import ProjectItem from '../../components/ProjectItem';
@@ -22,7 +22,7 @@ export const UserPage = () => {
       <MyAppBar />
       <Grid container spacing={2} style={{ padding: '2% 2% 0% 2%' }}>
         <Grid container item xs={4}>
-          <Card
+          <MyCard
             title="Address"
             helper="Click to copy"
             content={'xxxxxxxxxxxx'}
@@ -31,7 +31,7 @@ export const UserPage = () => {
           />
         </Grid>
         <Grid container item xs={4}>
-          <Card
+          <MyCard
             title="Balance"
             content={99}
             color="#1e88e5"
@@ -39,7 +39,7 @@ export const UserPage = () => {
           />
         </Grid>
         <Grid container item xs={4}>
-          <Card
+          <MyCard
             title="Amount Donated"
             content="500000"
             color="#303f9f"
@@ -80,26 +80,26 @@ export const UserPage = () => {
           />
         </Grid>
         <Grid container item xs={4} alignItems="flex-start" direction="column">
-          <Card
+          <MyCard
             color="#4db6ac"
             title="Deposit"
             content=""
             helper="deposit money into your account"
             icon={<PaymentIcon className={classes.icon} />}
           />
-          <Card
+          <MyCard
             color="#00897b"
-            title="Donation"
-            content=""
-            helper="donate to charity projects"
-            icon={<SendIcon className={classes.icon} />}
-          />
-          <Card
-            color="#004d40"
             title="Charity Project"
             content=""
             helper="click to create charity project"
             icon={<AddBoxIcon className={classes.icon} />}
+          />
+          <MyCard
+            color="#004d40"
+            title="Disbursement Request"
+            content=""
+            helper="5 requests waiting for your approve"
+            icon={<NotificationsIcon className={classes.icon} />}
           />
         </Grid>
       </Grid>
