@@ -15,9 +15,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TextField from '@material-ui/core/TextField';
-import SearchIcon from '@material-ui/icons/Search';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import Tag from '../Tag';
-import { FormControl } from '@material-ui/core';
+import { FormControl, MenuItem } from '@material-ui/core';
 let stt = 0;
 const columns = [
     { id: 'stt', label: '#', minWidth: 10 },
@@ -73,7 +74,7 @@ const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 const data = [
-    
+
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
@@ -307,30 +308,43 @@ export default function MyTable() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, _] = useState(10);
     const [rows, setRows] = useState(data)
+    const [status, setStatus] = useState("All Status")
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     const filterData = (value) => {
         if (value) {
-            const filtered = data.filter(d =>
-                {
-                    if(d.name.search(new RegExp(value,"i"))>=0
-                    ||d.start.search(new RegExp(value,"i"))>=0
-                    ||d.end.search(new RegExp(value,"i"))>=0
-                    ||d.amount===parseInt(value) 
-                    ||d.tag.props.content.search(new RegExp(value,"i"))>=0){
+            const filtered = data.filter(d => {
+                if (d.name.search(new RegExp(value, "i")) >= 0
+                    || d.start.search(new RegExp(value, "i")) >= 0
+                    || d.end.search(new RegExp(value, "i")) >= 0
+                    || d.amount === parseInt(value)
+                    || d.tag.props.content.search(new RegExp(value, "i")) >= 0) {
                     return d;
                 }
             });
 
-            
+
             setRows(filtered)
         } else {
             setRows(data)
         }
     }
+    const handleStatusChange = (event) => {
+        setStatus(event.target.value);
+        if (event.target.value != 'All Status') {
+            const filtered = data.filter(d => {
+                if (d.tag.props.content.search(new RegExp(event.target.value, "i")) >= 0) {
+                    return d;
+                }
+            });
+            setRows(filtered)
+        } else {
+            setRows(data)
+        }
 
+    };
     return (
         <Paper className={classes.root}>
             <TextField
@@ -338,10 +352,27 @@ export default function MyTable() {
                 id="outlined-size-normal"
                 placeholder="Search"
                 variant="outlined"
-                style={{ paddingBottom: '1%', width: '100%' }}
+                style={{ paddingBottom: '1%', width: '80%' }}
                 onChange={(e) => filterData(e.target.value)}
             />
-            
+            <FormControl style={{ width: '20%', paddingLeft: '2%' }} variant="outlined" className={classes.formControl}>
+
+                <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={status}
+                    onChange={handleStatusChange}
+                    displayEmpty
+                    className={classes.selectEmpty}
+                >
+
+                    <MenuItem value="All Status"> All Status</MenuItem>
+                    <MenuItem value="End">End</MenuItem>
+                    <MenuItem value="Processing">Processing</MenuItem>
+                    <MenuItem value="Waiting">Waiting</MenuItem>
+                </Select>
+            </FormControl>
+
             <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
