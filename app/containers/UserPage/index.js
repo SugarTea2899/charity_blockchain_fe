@@ -14,9 +14,19 @@ import MyCard from './MyCard';
 import MyList from '../../components/MyList';
 import DonateItem from '../../components/DonateItem';
 import ProjectItem from '../../components/ProjectItem';
+import saga from './saga';
+import reducer from './reducer';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import { makeSelectAddress, makeSelectBalance } from './selectors';
 
-export const UserPage = () => {
+const key = 'user';
+
+export const UserPage = ({address, balance}) => {
   const classes = useStyle();
+  useInjectReducer({key, reducer});
+  useInjectSaga({key, saga});
+
   return (
     <div className={classes.container}>
       <MyAppBar />
@@ -25,7 +35,7 @@ export const UserPage = () => {
           <MyCard
             title="Address"
             helper="Click to copy"
-            content={'xxxxxxxxxxxx'}
+            content={address}
             color="#2962ff"
             icon={<ContactsIcon className={classes.icon} />}
           />
@@ -33,7 +43,7 @@ export const UserPage = () => {
         <Grid container item xs={4}>
           <MyCard
             title="Balance"
-            content={99}
+            content={balance}
             color="#1e88e5"
             icon={<AccountBalanceWalletIcon className={classes.icon} />}
           />
@@ -119,7 +129,10 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  address: makeSelectAddress(),
+  balance: makeSelectBalance(),
+});
 
 const mapDispatchToProps = dispatch => {
   return {};

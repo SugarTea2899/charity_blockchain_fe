@@ -28,7 +28,7 @@ export default function MyAppBar() {
                   onClick={() => history.push('/history')}
                   className={classes.title}
                 >
-                  History
+                  Explore
                 </p>
                 <div onClick={onLogOut}>
                   <ExitToAppIcon className={classes.existButton} />

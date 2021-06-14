@@ -5,8 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import { CreateKey } from './CreateKey';
-import { AccessByKey } from './AccessByKey';
+import CreateKey from './CreateKey';
+import AccessByKey from './AccessByKey';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

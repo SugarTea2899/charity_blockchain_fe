@@ -1,22 +1,29 @@
-import React, {memo} from 'react';
+import React, { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { ColorButton } from '../../components/ColorButton';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { ColorButton } from '../../components/ColorButton';
+import { createPrivateKey } from './actions';
 
-export const CreateKey = () => {
+import { compose } from 'redux';
+import { connect, useDispatch } from 'react-redux';
+
+export const CreateKey = ({}) => {
   const classes = useStyle();
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.container}>
-      <ColorButton variant="contained" color="primary" endIcon={<VpnKeyIcon />}>
+      <ColorButton
+        onClick={() => dispatch(createPrivateKey(dispatch))}
+        variant="contained"
+        color="primary"
+        endIcon={<VpnKeyIcon />}
+      >
         Generate Private Key
       </ColorButton>
     </div>
-  )
-}
+  );
+};
 
 const useStyle = makeStyles({
   container: {
@@ -28,23 +35,14 @@ const useStyle = makeStyles({
   },
 });
 
-
-const mapStateToProps = createStructuredSelector({
-
-
-});
-
-
 const mapDispatchToProps = dispatch => {
-  return {}
-}
-
+  return {};
+};
 
 const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
+  undefined,
+  undefined,
 );
-
 
 export default compose(
   withConnect,

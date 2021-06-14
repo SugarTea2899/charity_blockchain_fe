@@ -10,10 +10,10 @@ import ConfirmAlert from '../../components/ConfirmAlert';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
-import { UserPage } from '../UserPage';
-import { ExplorePage } from '../ExplorePage';
-import { ProjectDetail } from '../ProjectDetail';
-import { ProjectExplore } from '../ProjectExplore';
+import UserPage from '../UserPage';
+import ExplorePage from '../ExplorePage';
+import ProjectDetail from '../ProjectDetail';
+import ProjectExplore from '../ProjectExplore';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
