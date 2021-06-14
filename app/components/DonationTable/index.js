@@ -21,49 +21,30 @@ import Tag from '../Tag';
 import { FormControl, MenuItem } from '@material-ui/core';
 let stt = 0;
 const columns = [
-    { id: 'stt', label: '#', minWidth: 10 },
-    { id: 'name', label: 'Projects', minWidth: 170 },
-    { id: 'start', label: 'Start\u00a0Date', minWidth: 100 },
+    { id: 'id', label: 'Id', minWidth: 10 },
+    { id: 'from', label: 'From', minWidth: 170 },
+    { id: 'to', label: 'To', minWidth: 100 },
     {
-        id: 'end',
-        label: 'End\u00a0Date',
+        id: 'date',
+        label: 'Date',
         minWidth: 100,
         align: 'center',
         format: value => value.toLocaleString('en-US'),
     },
     {
         id: 'amount',
-        label: 'Amount Donated',
+        label: 'Amount',
         minWidth: 100,
         align: 'center',
         format: value => value.toLocaleString('en-US'),
     },
-    {
-        id: 'tag',
-        label: 'Status',
-        minWidth: 70,
-        align: 'center',
-    },
 ];
 
-function createData(name, start, end, amount, status) {
-    stt += 1;
-    let tag;
-    if (status === 1 || status === 2) {
-        tag = <Tag content="End" backGroundColor="#2980b9" textColor="white" />;
-    }
+function createData(id,from, to, date, amount) {
+    
 
-    if (status === 0) {
-        tag = (
-            <Tag content="Processing" backGroundColor="#efcf71" textColor="#c12a2a" />
-        );
-    }
 
-    if (status === -1) {
-        tag = <Tag content="Waiting" backGroundColor="#999999" />;
-    }
-
-    return { stt, name, start, end, amount, tag };
+    return { id,from, to, date, amount };
 }
 
 const StyledTableCell = withStyles(theme => ({
@@ -76,150 +57,124 @@ const StyledTableCell = withStyles(theme => ({
 const data = [
 
     createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
+
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
     ),
     createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
+        1,
+        'DQT',
+        'TQT',
         '04/06/2021',
-        15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        150,
     ),
+    createData(
+        1,
+        'DQT',
+        'TQT',
+        '04/06/2021',
+        150,
+    ),
+    createData(
+        1,
+        'DQT',
+        'TQT',
+        '04/06/2021',
+        150,
+    ),
+    createData(
+        1,
+        'DQT',
+        'TQT',
+        '04/06/2021',
+        150,
+    ),
+    createData(
+        1,
+        'DQT',
+        'TQT',
+        '04/06/2021',
+        150,
+    ),
+    createData(
+        1,
+        'DQT',
+        'TQT',
+        '04/06/2021',
+        150,
+    ),
+
 ];
 
 const useStyles = makeStyles({
     root: {
-        margin: '5% 2% 10% 2%',
+        margin: '5% 5% 10% 5%',
     },
     container: {
         maxWidth: '100%',
@@ -303,7 +258,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function MyTable() {
+export default function DonationTable() {
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, _] = useState(10);
@@ -313,65 +268,9 @@ export default function MyTable() {
         setPage(newPage);
     };
 
-    const filterData = (value) => {
-        if (value) {
-            const filtered = data.filter(d => {
-                if (d.name.search(new RegExp(value, "i")) >= 0
-                    || d.start.search(new RegExp(value, "i")) >= 0
-                    || d.end.search(new RegExp(value, "i")) >= 0
-                    || d.amount === parseInt(value)
-                    || d.tag.props.content.search(new RegExp(value, "i")) >= 0) {
-                    return d;
-                }
-            });
 
-
-            setRows(filtered)
-        } else {
-            setRows(data)
-        }
-    }
-    const handleStatusChange = (event) => {
-        setStatus(event.target.value);
-        if (event.target.value != 'All Status') {
-            const filtered = data.filter(d => {
-                if (d.tag.props.content.search(new RegExp(event.target.value, "i")) >= 0) {
-                    return d;
-                }
-            });
-            setRows(filtered)
-        } else {
-            setRows(data)
-        }
-
-    };
     return (
         <Paper className={classes.root}>
-            <TextField
-                label="Search"
-                id="outlined-size-normal"
-                placeholder="Search"
-                variant="outlined"
-                style={{ paddingBottom: '1%', width: '80%' }}
-                onChange={(e) => filterData(e.target.value)}
-            />
-            <FormControl  style={{ width: '20%', paddingLeft: '2%' }} className={classes.formControl}>
-            <InputLabel style={{ width: '50%', paddingLeft: '13%' }} id ="demo-simple-select-outlined-label">Status</InputLabel>
-                <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={status}
-                    onChange={handleStatusChange}
-                    displayEmpty
-                    className={classes.selectEmpty}>
-
-                    <MenuItem value="All Status"> All Status</MenuItem>
-                    <MenuItem value="End">End</MenuItem>
-                    <MenuItem value="Processing">Processing</MenuItem>
-                    <MenuItem value="Waiting">Waiting</MenuItem>
-                </Select>
-            </FormControl>
-
             <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

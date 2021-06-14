@@ -10,7 +10,8 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import Alert from '../../components/Alert';
 import ConfirmAlert from '../../components/ConfirmAlert';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
-import { ProjectPage } from '../ProjectPage';
+import  ProjectPage  from '../ProjectPage';
+import DonationPage from '../DonationPage';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
@@ -23,7 +24,8 @@ export function App({ alert, confirmAlert }) {
       <ConfirmAlert {...confirmAlert} />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/project" component={ProjectPage} />
+        <Route exact path="/projects" component={ProjectPage} />
+        <Route exact path="/donations" component={DonationPage} />
       </Switch>
       <GlobalStyle />
     </div>
