@@ -15,4 +15,10 @@ const makeSelectBalance = () =>
     userState => userState.balance,
   );
 
-export { makeSelectAddress, makeSelectBalance };
+const makeSelectCreateProject = () =>
+  createSelector(
+    selectUser,
+    userState => userState.createProjectDialog,
+  );
+
+export { makeSelectAddress, makeSelectBalance, makeSelectCreateProject };

@@ -17,3 +17,7 @@ export const getTime = (time) => {
 export const hideCharacter = (str, size = 10) => {
   return str.substring(0, size) + (str.length > size ? '...' : '');
 }
+
+export const formatDate = (date) => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}

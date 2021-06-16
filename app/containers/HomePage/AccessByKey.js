@@ -47,7 +47,7 @@ const useStyle = makeStyles({
   },
   nextButton: {
     marginTop: '5%',
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     height: '50%'
   }
 });

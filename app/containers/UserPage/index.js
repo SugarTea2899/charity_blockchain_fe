@@ -18,11 +18,13 @@ import saga from './saga';
 import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
-import { makeSelectAddress, makeSelectBalance } from './selectors';
+import { makeSelectAddress, makeSelectBalance, makeSelectCreateProject } from './selectors';
+import CreateProject from './CreateProject';
+import { onCreateProjectDialog } from './actions';
 
 const key = 'user';
 
-export const UserPage = ({address, balance}) => {
+export const UserPage = ({address, balance, createProjectDialog, onCreateProject}) => {
   const classes = useStyle();
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
@@ -30,6 +32,7 @@ export const UserPage = ({address, balance}) => {
   return (
     <div className={classes.container}>
       <MyAppBar />
+      <CreateProject {...createProjectDialog} />
       <Grid container spacing={2} style={{ padding: '2% 2% 0% 2%' }}>
         <Grid container item xs={4}>
           <MyCard
@@ -103,6 +106,7 @@ export const UserPage = ({address, balance}) => {
             content=""
             helper="click to create charity project"
             icon={<AddBoxIcon className={classes.icon} />}
+            onClick={onCreateProject}
           />
           <MyCard
             color="#004d40"
@@ -132,10 +136,13 @@ const useStyle = makeStyles({
 const mapStateToProps = createStructuredSelector({
   address: makeSelectAddress(),
   balance: makeSelectBalance(),
+  createProjectDialog: makeSelectCreateProject(),
 });
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onCreateProject: () => dispatch(onCreateProjectDialog(dispatch))
+  };
 };
 
 const withConnect = connect(

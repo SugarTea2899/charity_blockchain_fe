@@ -7,17 +7,29 @@ import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import history from '../../utils/history';
 import { updateUserInfo } from '../UserPage/actions';
 
-function* createPrivateKey({ dispatch }) {
+function* createPrivateKey({ dispatch, name }) {
   try {
+    if (name.length === 0) {
+      const alert = {
+        open: true,
+        title: 'Error',
+        content: `Nick name is empty`,
+        onClose: () => dispatch(updateAlert({ open: false })),
+      };
+  
+      yield put(updateAlert(alert));
+      return;
+    }
+
     yield put(setLoading(true));
-    const result = yield call(API.createWallet);
+    const result = yield call(API.createWallet, name);
     copyToClipboard(result.payload.privateKey);
 
     const alert = {
       open: true,
       title: 'Alert',
       content:
-        'Your private key was copied to clip board.\nPlease store it carefully.',
+        `Hi ${name}, your private key was copied to clip board.\nPlease store it carefully.`,
       onClose: () => dispatch(updateAlert({ open: false })),
     };
 
