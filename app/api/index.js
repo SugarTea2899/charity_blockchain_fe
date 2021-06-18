@@ -11,3 +11,7 @@ export const getWallet = (privateKey) => {
 export const createProject = (project, privateKey) => {
   return fetchData('post', '/event', project, privateKey);
 }
+
+export const getUserProjects = (privateKey) => {
+  return fetchData('get', '/event/mine', undefined, privateKey);
+}

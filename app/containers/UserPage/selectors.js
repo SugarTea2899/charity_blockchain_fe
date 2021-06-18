@@ -21,4 +21,15 @@ const makeSelectCreateProject = () =>
     userState => userState.createProjectDialog,
   );
 
-export { makeSelectAddress, makeSelectBalance, makeSelectCreateProject };
+const makeSelectUserProject = () =>
+  createSelector(
+    selectUser,
+    userState => userState.projects,
+  );
+  
+export {
+  makeSelectAddress,
+  makeSelectBalance,
+  makeSelectCreateProject,
+  makeSelectUserProject,
+};

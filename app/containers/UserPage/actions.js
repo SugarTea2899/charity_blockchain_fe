@@ -1,8 +1,10 @@
 import {
   CREATE_PROJECT_REQUEST,
   ON_CREATE_PROJECT_DIALOG,
+  ON_PAGE_LOAD,
   UPDATE_CREATE_PROJECT_DIALOG,
   UPDATE_USER_INFO,
+  UPDATE_USER_PROJECTS,
 } from './constants';
 
 export const updateUserInfo = (address, balance) => ({
@@ -24,5 +26,14 @@ export const onCreateProjectDialog = dispatch => ({
 export const createProjectRequest = (project, dispatch) => ({
   type: CREATE_PROJECT_REQUEST,
   project,
-  dispatch
+  dispatch,
+});
+
+export const updateUserProjects = projects => ({
+  type: UPDATE_USER_PROJECTS,
+  projects,
+});
+
+export const onPageLoad = () => ({
+  type: ON_PAGE_LOAD,
 });

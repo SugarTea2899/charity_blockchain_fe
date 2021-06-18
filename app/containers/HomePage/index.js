@@ -9,6 +9,8 @@ import saga from './saga';
 import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
+import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
+import history from '../../utils/history';
 
 const key = 'home';
 
@@ -17,6 +19,10 @@ export const HomePage = () => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  if (localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
+    history.replace('/user');
+  }
+  
   return (
     <div className={classes.container}>
       <MyAppBar />

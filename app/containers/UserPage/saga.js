@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { setLoading, updateAlert } from '../App/actions';
-import { createProjectRequest, updateCreateProjectDialog } from './actions';
-import { CREATE_PROJECT_REQUEST, ON_CREATE_PROJECT_DIALOG } from './constants';
+import { createProjectRequest, updateCreateProjectDialog, updateUserProjects } from './actions';
+import { CREATE_PROJECT_REQUEST, ON_CREATE_PROJECT_DIALOG, ON_PAGE_LOAD } from './constants';
 import * as API from '../../api';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 
@@ -35,7 +35,24 @@ export function* createProject({ project, dispatch }) {
   }
 }
 
+export function* onLoad() {
+  if (localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
+    try {
+      yield put(setLoading(true));
+
+      const userProjectsRes = yield call(API.getUserProjects, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
+
+      yield put(updateUserProjects(userProjectsRes.payload.events));
+
+      yield put(setLoading(false));
+    } catch (error) {
+      yield put(setLoading(false));
+    }
+  }
+}
+
 export default function* userSaga() {
   yield takeLatest(ON_CREATE_PROJECT_DIALOG, showCreateProjectDialog);
   yield takeLatest(CREATE_PROJECT_REQUEST, createProject);
+  yield takeLatest(ON_PAGE_LOAD, onLoad);
 }

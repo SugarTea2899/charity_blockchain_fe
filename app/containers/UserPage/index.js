@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -18,16 +18,36 @@ import saga from './saga';
 import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
-import { makeSelectAddress, makeSelectBalance, makeSelectCreateProject } from './selectors';
+import {
+  makeSelectAddress,
+  makeSelectBalance,
+  makeSelectCreateProject,
+  makeSelectUserProject,
+} from './selectors';
 import CreateProject from './CreateProject';
-import { onCreateProjectDialog } from './actions';
+import { onCreateProjectDialog, onPageLoad } from './actions';
 
 const key = 'user';
 
-export const UserPage = ({address, balance, createProjectDialog, onCreateProject}) => {
+export const UserPage = ({
+  address,
+  balance,
+  userProjects,
+  createProjectDialog,
+  onCreateProject,
+  onLoad,
+}) => {
   const classes = useStyle();
-  useInjectReducer({key, reducer});
-  useInjectSaga({key, saga});
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  const getProjectItems = () => {
+    return userProjects.map((item, index) => <ProjectItem key={index} {...item} />)
+  }
 
   return (
     <div className={classes.container}>
@@ -82,13 +102,7 @@ export const UserPage = ({address, balance, createProjectDialog, onCreateProject
         <Grid container item xs={4}>
           <MyList
             title="Your projects"
-            item={[
-              <ProjectItem />,
-              <ProjectItem />,
-              <ProjectItem />,
-              <ProjectItem />,
-              <ProjectItem />,
-            ]}
+            item={getProjectItems()}
             onClick={() => {}}
           />
         </Grid>
@@ -137,11 +151,13 @@ const mapStateToProps = createStructuredSelector({
   address: makeSelectAddress(),
   balance: makeSelectBalance(),
   createProjectDialog: makeSelectCreateProject(),
+  userProjects: makeSelectUserProject(),
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreateProject: () => dispatch(onCreateProjectDialog(dispatch))
+    onCreateProject: () => dispatch(onCreateProjectDialog(dispatch)),
+    onLoad: () => dispatch(onPageLoad()),
   };
 };
 

@@ -63,9 +63,10 @@ function* accessWallet({ privateKey, dispatch }) {
 
   try {
     yield put(setLoading(true));
-    const result = yield call(API.getWallet, privateKey);
 
+    const result = yield call(API.getWallet, privateKey);
     localStorage.setItem(LOCAL_STORAGE_PRIVATE_KEY, privateKey);
+
     yield put(setLoading(false));
     yield put(updateUserInfo(result.payload.address, result.payload.balance));
     

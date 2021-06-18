@@ -1,9 +1,11 @@
 import React from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { formatDate, formatDateTime, getColorFromStatusCode, getStatusFromStatusCode } from '../../utils/helpers';
 
-export const ProjectItem = () => {
+export const ProjectItem = ({address, name, timestamp, status, amountDonated}) => {
   const classes = useStyle();
+
   return (
     <div className={classes.container}>
       <Grid container>
@@ -14,22 +16,22 @@ export const ProjectItem = () => {
             </div>
           </Grid>
           <Grid container item xs={9} direction="column" justify="center">
-            <Link style={{ textDecoration: 'none' }} to={`/donations/1`}>
-              <Typography className={classes.blueText}>Từ thiện </Typography>
+            <Link style={{ textDecoration: 'none' }} to={`/projects/${address}`}>
+              <Typography className={classes.blueText}>{name} </Typography>
             </Link>
             <Typography className={classes.grayText}>
-              15:00, 1/1/2021
+              {formatDateTime(new Date(timestamp))}
             </Typography>
           </Grid>
         </Grid>
         <Grid container item xs={3} alignItems="center">
-          <Typography style={{color: '#66bb6a', fontSize: '0.8rem', fontWeight: 'bold'}}>
-            Accepted
+          <Typography style={{color: getColorFromStatusCode(status), fontSize: '0.8rem', fontWeight: 'bold'}}>
+            {getStatusFromStatusCode(status)}
           </Typography>
         </Grid>
         <Grid container item xs={4} justify="flex-end" alignItems="center">
           <Typography className={classes.blueText}>
-            <span style={{ color: 'black' }}>Amount Donated: </span> 10
+            <span style={{ color: 'black' }}>Amount Donated: </span> {amountDonated}
           </Typography>
         </Grid>
       </Grid>
