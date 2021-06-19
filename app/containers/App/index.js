@@ -1,19 +1,23 @@
 import React, { memo } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
-import GlobalStyle from '../../global-styles';
 import { makeStyles } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import GlobalStyle from '../../global-styles';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Alert from '../../components/Alert';
 import ConfirmAlert from '../../components/ConfirmAlert';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { makeSelectAlert, makeSelectConfirmAlert } from './selectors';
 import UserPage from '../UserPage';
 import ExplorePage from '../ExplorePage';
 import ProjectDetail from '../ProjectDetail';
 import ProjectExplore from '../ProjectExplore';
+import ProjectPage  from '../ProjectPage';
+import DonationPage from '../DonationPage';
+import UserProjectPage from '../UserProjectPage';
+import UserDonationPage from '../UserDonationPage';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
@@ -30,6 +34,10 @@ export function App({ alert, confirmAlert }) {
         <Route path="/explore" component={ExplorePage} />
         <Route path="/projects/:id/history" component={ProjectExplore} />
         <Route path="/projects/:id" component={ProjectDetail} />
+        <Route path="/projects" component={ProjectPage} />
+        <Route path="/donations" component={DonationPage} />
+        <Route path="/user/projects" component={UserProjectPage} />
+        <Route path="/user/donations" component={UserDonationPage} />
       </Switch>
       <GlobalStyle />
     </div>
