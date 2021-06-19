@@ -15,3 +15,15 @@ export const createProject = (project, privateKey) => {
 export const getUserProjects = (privateKey) => {
   return fetchData('get', '/event/mine', undefined, privateKey);
 }
+
+export const getProjectDetail = (address) => {
+  return fetchData('get', `/event/detail?address=${address}`);
+}
+
+export const getProjects = () => {
+  return fetchData('get', '/event');
+}
+
+// export const acceptProject = (privateKey, address) => {
+//   return fetchData('get', `event`)
+// }

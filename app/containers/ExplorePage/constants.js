@@ -1,0 +1,10 @@
+
+export const ON_PAGE_LOAD = 'explore/ON_PAGE_LOAD';
+
+export const LOAD_EXPLORE_PROJECT = 'explore/LOAD_EXPLORE_PROJECT';
+
+export const LOAD_EXPLORE_DONATION = 'explore/LOAD_EXPLORE_DONATION';
+
+export const ON_LOAD_EXPLORE_PROJECT = 'explore/ON_LOAD_EXPLORE_PROJECT';
+
+export const ON_LOAD_EXPLORE_DONATION = 'explore/ON_LOAD_EXPLORE_DONATION'; 

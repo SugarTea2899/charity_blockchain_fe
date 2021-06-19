@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -16,44 +16,67 @@ import SendIcon from '@material-ui/icons/Send';
 import HistoryIcon from '@material-ui/icons/History';
 import PaymentIcon from '@material-ui/icons/Payment';
 import MyCard from '../UserPage/MyCard';
+import { onAccept, onPageLoad } from './actions';
+import saga from './saga';
+import reducer from './reducer';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import { makeSelectProjectDetail } from './selectors';
+import {
+  formatDate,
+  getColorFromStatusCode,
+  getStatusFromStatusCode,
+} from '../../utils/helpers';
+import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
+import CreateDonation from './CreateDonation';
 
-export const ProjectDetail = () => {
+const key = 'projectDetail';
+
+export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
   const classes = useStyle();
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  const isLogin = localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)
+    ? true
+    : false;
+
+  useEffect(() => {
+    onLoad(match.params.id);
+  }, []);
+
   return (
     <div className={classes.container}>
+      <CreateDonation />
       <MyAppBar />
       <Grid container>
         <Grid container item xs={8} alignItems="flex-start">
           <Card className={classes.cardContainer}>
             <CardHeader
-              title="Từ Thiện Miền Nam"
+              title={project.name}
               classes={{
                 title: classes.cardTitle,
                 root: classes.headerRoot,
               }}
             />
             <CardContent style={{ padding: '0%' }}>
-              <Information title="ID:" content="1234" markBlue />
-              <Information
-                title="Description:"
-                content="Cuu tro dong bao lu lut tinh XYZ"
-              />
+              <Information title="Description:" content={project.description} />
               <Information
                 title="Start Date:"
-                content="01-01-2021"
+                content={formatDate(new Date(project.startDate))}
                 customColor="#bdbdbd"
               />
               <Information
                 title="End Date:"
-                content="01-01-2022"
+                content={formatDate(new Date(project.endDate))}
                 customColor="#bdbdbd"
               />
               <Information title="Representative:" content="Tran Quang Thien" />
               <Information title="Address Key:" content="1712785" />
               <Information
                 title="Status:"
-                content="Waiting"
-                customColor="red"
+                content={getStatusFromStatusCode(project.status)}
+                customColor={getColorFromStatusCode(project.status)}
                 isBold
               />
               <Information
@@ -62,26 +85,37 @@ export const ProjectDetail = () => {
                 customColor="#00e676"
                 isBold
               />
-              <Information title="Amount Donated:" content="100000" markBlue />
+              <Information
+                title="Amount Donated:"
+                content={project.amountDonated}
+                markBlue
+              />
               <Information title="Disbursed:" content="100000" markBlue />
             </CardContent>
           </Card>
         </Grid>
-        <Grid container item xs={4} style={{ padding: '2% 2% 0% 2%' }}>
-          <MyCard
-            title="Accept"
-            content=""
-            helper="accept this project"
-            color="#2196f3"
-            icon={<ThumbUpAltIcon className={classes.icon} />}
-          />
-          <MyCard
-            title="Donate"
-            content=""
-            helper="donate to this project"
-            color="#2196f3"
-            icon={<SendIcon className={classes.icon} />}
-          />
+        <Grid container item xs={4} style={{ padding: '2% 2% 0% 2%' }} alignItems='flex-start'>
+          {isLogin && (
+            <>
+              <MyCard
+                title="Donate"
+                content=""
+                helper="donate to this project"
+                color="#2196f3"
+                icon={<SendIcon className={classes.icon} />}
+              />
+
+              <MyCard
+                title="Accept"
+                content=""
+                helper="accept this project"
+                color="#2196f3"
+                icon={<ThumbUpAltIcon className={classes.icon} />}
+                onClick={onAccept}
+              />
+            </>
+          )}
+
           <MyCard
             title="History"
             content=""
@@ -133,10 +167,15 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  project: makeSelectProjectDetail(),
+});
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onLoad: address => dispatch(onPageLoad(address)),
+    onAccept: () => dispatch(onAccept(dispatch))
+  };
 };
 
 const withConnect = connect(

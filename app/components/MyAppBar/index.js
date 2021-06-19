@@ -25,7 +25,7 @@ export default function MyAppBar() {
             {isAccessed && (
               <>
                 <p
-                  onClick={() => history.push('/history')}
+                  onClick={() => history.push('/explore')}
                   className={classes.title}
                 >
                   Explore

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -7,14 +7,39 @@ import MyAppBar from '../../components/MyAppBar';
 import MyList from '../../components/MyList';
 import DonateItemExpand from '../../components/DonateItemExpan';
 import ProjectItemExpand from '../../components/ProjectItemExpand';
+import saga from './saga';
+import reducer from './reducer';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import { onPageLoad } from './actions';
+import {
+  makeSelectExploreDonations,
+  makeSelectExploreProjects,
+} from './selectors';
 
-export const ExplorePage = () => {
+const key = 'explore';
+
+export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
   const classes = useStyle();
+
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  const getProjectsItem = () => {
+    return exploreProjects.map((project, index) => (
+      <ProjectItemExpand key={index} {...project} />
+    ));
+  };
+
   return (
     <div className={classes.container}>
       <MyAppBar />
       <Grid container spacing={2} style={{ padding: '2%' }}>
-        <Grid container item xs={6}>
+        <Grid container item xs={6} alignItems='flex-start'>
           <MyList
             title="Donations"
             item={[
@@ -27,16 +52,10 @@ export const ExplorePage = () => {
             onClick={() => {}}
           />
         </Grid>
-        <Grid container item xs={6}>
+        <Grid container item xs={6} alignItems='flex-start'>
           <MyList
             title="Charity Projects"
-            item={[
-              <ProjectItemExpand />,
-              <ProjectItemExpand />,
-              <ProjectItemExpand />,
-              <ProjectItemExpand />,
-              <ProjectItemExpand />,
-            ]}
+            item={getProjectsItem()}
             onClick={() => {}}
           />
         </Grid>
@@ -52,10 +71,15 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  exploreProjects: makeSelectExploreProjects(),
+  exploreDonations: makeSelectExploreDonations(),
+});
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onLoad: () => dispatch(onPageLoad()),
+  };
 };
 
 const withConnect = connect(
