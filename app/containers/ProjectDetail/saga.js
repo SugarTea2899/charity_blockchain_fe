@@ -10,7 +10,7 @@ export function* onPageLoad({address}) {
 
     const result = yield call(API.getProjectDetail, address);
 
-    yield put(updateProjectDetail(result.event));
+    yield put(updateProjectDetail(result.event, result.percentAccepted));
     yield put(setLoading(false));
   } catch (error) {
     yield put(setLoading(false));

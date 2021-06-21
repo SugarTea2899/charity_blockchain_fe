@@ -5,13 +5,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import MyTable from '../../components/MyTable';
 import MyAppBar from '../../components/MyAppBar';
+import { makeSelectUserProject } from '../UserPage/selectors';
 
-export const UserProjectPage = () => {
+export const UserProjectPage = ({projects}) => {
   const classes = useStyle();
+
   return (
     <div className={classes.container}>
       <MyAppBar />
-      <MyTable />
+      <MyTable projects={projects} />
     </div>
   );
 };
@@ -27,7 +29,9 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  projects: makeSelectUserProject()
+});
 
 const mapDispatchToProps = dispatch => {return {}};
 

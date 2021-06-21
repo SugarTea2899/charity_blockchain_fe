@@ -3,7 +3,7 @@ import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { formatDateTime, getColorFromStatusCode, getStatusFromStatusCode } from '../../utils/helpers';
 
-export const ProjectItemExpand = ({name, timestamp, status, amountDonated}) => {
+export const ProjectItemExpand = ({name, address, timestamp, status, amountDonated, percentAccepted}) => {
   const classes = useStyle();
   return (
     <div className={classes.container}>
@@ -15,7 +15,7 @@ export const ProjectItemExpand = ({name, timestamp, status, amountDonated}) => {
             </div>
           </Grid>
           <Grid container item xs={9} direction="column" justify="center">
-            <Link style={{ textDecoration: 'none' }} to={`/donations/1`}>
+            <Link style={{ textDecoration: 'none' }} to={`/projects/${address}`}>
               <Typography className={classes.blueText}>{name} </Typography>
             </Link>
             <Typography className={classes.grayText}>
@@ -31,7 +31,7 @@ export const ProjectItemExpand = ({name, timestamp, status, amountDonated}) => {
             <span style={{ color: 'black', fontWeight: 'normal' }}>
               Approval Rate:{' '}
             </span>{' '}
-            10%
+            {`${percentAccepted}%`}
           </Typography>
           <Typography
             className={classes.blueText}

@@ -31,7 +31,7 @@ export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
 
   const getProjectsItem = () => {
     return exploreProjects.map((project, index) => (
-      <ProjectItemExpand key={index} {...project} />
+      <ProjectItemExpand key={index} {...project.event} percentAccepted={project.percentAccepted} />
     ));
   };
 

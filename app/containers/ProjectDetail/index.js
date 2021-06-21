@@ -21,18 +21,30 @@ import saga from './saga';
 import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
-import { makeSelectProjectDetail } from './selectors';
+import {
+  makeSelectPercentAccepted,
+  makeSelectProjectDetail,
+} from './selectors';
 import {
   formatDate,
   getColorFromStatusCode,
   getStatusFromStatusCode,
+  hideCharacter,
 } from '../../utils/helpers';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import CreateDonation from './CreateDonation';
+import { makeSelectAddress } from '../UserPage/selectors';
 
 const key = 'projectDetail';
 
-export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
+export const ProjectDetail = ({
+  onLoad,
+  onAccept,
+  address,
+  match,
+  project,
+  percentAccepted,
+}) => {
   const classes = useStyle();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -40,6 +52,8 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
   const isLogin = localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)
     ? true
     : false;
+
+  const isOwner = address === project.creator;
 
   useEffect(() => {
     onLoad(match.params.id);
@@ -71,8 +85,15 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
                 content={formatDate(new Date(project.endDate))}
                 customColor="#bdbdbd"
               />
-              <Information title="Representative:" content="Tran Quang Thien" />
-              <Information title="Address Key:" content="1712785" />
+              <Information
+                title="Representative:"
+                content={project.creatorName}
+              />
+              <Information
+                title="Address Key:"
+                content={project.creator}
+                markBlue
+              />
               <Information
                 title="Status:"
                 content={getStatusFromStatusCode(project.status)}
@@ -81,7 +102,7 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
               />
               <Information
                 title="Approval Rate:"
-                content="80%"
+                content={`${percentAccepted}%`}
                 customColor="#00e676"
                 isBold
               />
@@ -94,17 +115,15 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid container item xs={4} style={{ padding: '2% 2% 0% 2%' }} alignItems='flex-start'>
-          {isLogin && (
+        <Grid
+          container
+          item
+          xs={4}
+          style={{ padding: '2% 2% 0% 2%' }}
+          alignItems="flex-start"
+        >
+          {isLogin && !isOwner && (
             <>
-              <MyCard
-                title="Donate"
-                content=""
-                helper="donate to this project"
-                color="#2196f3"
-                icon={<SendIcon className={classes.icon} />}
-              />
-
               <MyCard
                 title="Accept"
                 content=""
@@ -116,6 +135,16 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
             </>
           )}
 
+          {isLogin && (
+            <MyCard
+              title="Donate"
+              content=""
+              helper="donate to this project"
+              color="#2196f3"
+              icon={<SendIcon className={classes.icon} />}
+            />
+          )}
+          
           <MyCard
             title="History"
             content=""
@@ -123,13 +152,16 @@ export const ProjectDetail = ({ onLoad, onAccept, match, project }) => {
             color="#1976d2"
             icon={<HistoryIcon className={classes.icon} />}
           />
-          <MyCard
-            title="Disburse"
-            content=""
-            helper="send disburse for all users donated"
-            color="#1565c0"
-            icon={<PaymentIcon className={classes.icon} />}
-          />
+
+          {isLogin && isOwner && (
+            <MyCard
+              title="Disburse"
+              content=""
+              helper="send disburse for all users donated"
+              color="#1565c0"
+              icon={<PaymentIcon className={classes.icon} />}
+            />
+          )}
         </Grid>
       </Grid>
     </div>
@@ -169,12 +201,14 @@ const useStyle = makeStyles({
 
 const mapStateToProps = createStructuredSelector({
   project: makeSelectProjectDetail(),
+  percentAccepted: makeSelectPercentAccepted(),
+  address: makeSelectAddress(),
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     onLoad: address => dispatch(onPageLoad(address)),
-    onAccept: () => dispatch(onAccept(dispatch))
+    onAccept: () => dispatch(onAccept(dispatch)),
   };
 };
 

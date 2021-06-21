@@ -3,19 +3,29 @@ import React from 'react';
 
 export default function Tag(props) {
   return (
-    <>
-      <Typography
+    <div style={{
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center'
+    }}>
+      <div
         style={{
-          fontSize: '1.15em',
-          padding: '3% 1% 3% 1%',
           backgroundColor: props.backGroundColor,
-          borderRadius: 30,
-          fontWeight: 'bold',
-          color: props.textColor,
+          width: '70%',
+          padding: '2% 4% 2% 4%',
+          borderRadius: '20px',
         }}
       >
-        {props.content}
-      </Typography>
-    </>
+        <Typography
+          style={{
+            fontSize: '0.8rem',
+            fontWeight: 'bold',
+            color: props.textColor,
+          }}
+        >
+          {props.content}
+        </Typography>
+      </div>
+    </div>
   );
 }

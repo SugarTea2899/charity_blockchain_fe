@@ -1,17 +1,33 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { compose } from 'redux';
 import MyTable from '../../components/MyTable';
 import MyAppBar from '../../components/MyAppBar';
+import { getProject } from './actions';
+import saga from './saga';
+import reducer from './reducer';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import { makeSelectProjectsList } from './selector';
 
-export const ProjectPage = () => {
+const key = 'projects';
+
+export const ProjectPage = ({projects, getProjects}) => {
   const classes = useStyle();
+
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    getProjects()
+  }, []);
+
   return (
     <div className={classes.container}>
       <MyAppBar />
-      <MyTable />
+      <MyTable projects={projects} />
     </div>
   );
 };
@@ -27,9 +43,13 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  projects: makeSelectProjectsList()
+});
 
-const mapDispatchToProps = dispatch => {return {}};
+const mapDispatchToProps = dispatch => {return {
+  getProjects: () => dispatch(getProject())
+}};
 
 const withConnect = connect(
   mapStateToProps,

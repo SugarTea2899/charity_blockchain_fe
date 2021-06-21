@@ -23,7 +23,7 @@ const CreateDonation = ({ open, onClose, onSend }) => {
   //   else setAmountError('You not enough coin to send');
   // }, [amount]);
   return (
-    <Dialog open={true} fullWidth onClose={onClose}>
+    <Dialog open={false} fullWidth onClose={onClose}>
       <DialogTitle>{'Create Donation'}</DialogTitle>
       <DialogContent>
         <TextField

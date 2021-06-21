@@ -30,14 +30,14 @@ export function App({ alert, confirmAlert }) {
       <ConfirmAlert {...confirmAlert} />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/user/projects" component={UserProjectPage} />
+        <Route path="/user/donations" component={UserDonationPage} />
         <Route path="/user" component={UserPage} />
         <Route path="/explore" component={ExplorePage} />
         <Route path="/projects/:id/history" component={ProjectExplore} />
         <Route path="/projects/:id" component={ProjectDetail} />
         <Route path="/projects" component={ProjectPage} />
         <Route path="/donations" component={DonationPage} />
-        <Route path="/user/projects" component={UserProjectPage} />
-        <Route path="/user/donations" component={UserDonationPage} />
       </Switch>
       <GlobalStyle />
     </div>

@@ -21,7 +21,8 @@ export const acceptProject = (address) => ({
   address
 });
 
-export const updateProjectDetail = projectDetail => ({
+export const updateProjectDetail = (projectDetail, percentAccepted) => ({
   type: UPDATE_PROJECT_DETAIL,
   projectDetail,
+  percentAccepted
 });

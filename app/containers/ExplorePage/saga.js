@@ -19,7 +19,7 @@ export function* loadExploreProjectSaga() {
 
     const result = yield call(API.getProjects);
     
-    const exploreProjects = result.payload.events.filter((item, index) => index < 5).reverse();
+    const exploreProjects = result.payload.events.reverse().filter((item, index) => index < 5);
     yield put(loadExploreProject(exploreProjects));
 
     yield put(setLoading(false));

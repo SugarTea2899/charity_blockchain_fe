@@ -26,6 +26,8 @@ import {
 } from './selectors';
 import CreateProject from './CreateProject';
 import { onCreateProjectDialog, onPageLoad } from './actions';
+import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
+import history from '../../utils/history';
 
 const key = 'user';
 
@@ -46,9 +48,12 @@ export const UserPage = ({
   }, []);
 
   const getProjectItems = () => {
-    return userProjects.map((item, index) => <ProjectItem key={index} {...item} />)
+    return userProjects.map((item, index) => <ProjectItem key={index} {...item.event} />)
   }
 
+  if (!localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
+    history.push('/')
+  }
   return (
     <div className={classes.container}>
       <MyAppBar />
@@ -103,7 +108,7 @@ export const UserPage = ({
           <MyList
             title="Your projects"
             item={getProjectItems()}
-            onClick={() => {}}
+            onClick={() => history.push('/user/projects')}
           />
         </Grid>
         <Grid container item xs={4} alignItems="flex-start" direction="column">

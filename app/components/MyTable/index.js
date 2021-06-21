@@ -49,18 +49,18 @@ const columns = [
 function createData(name, start, end, amount, status) {
     stt += 1;
     let tag;
-    if (status === 1 || status === 2) {
-        tag = <Tag content="End" backGroundColor="#2980b9" textColor="white" />;
+    if (status === 1) {
+        tag = <Tag content="Processing" backGroundColor="#2980b9" textColor="white" />;
     }
 
-    if (status === 0) {
+    if (status === 2) {
         tag = (
-            <Tag content="Processing" backGroundColor="#efcf71" textColor="#c12a2a" />
+            <Tag content="End" backGroundColor="#999999" textColor="white" />
         );
     }
 
-    if (status === -1) {
-        tag = <Tag content="Waiting" backGroundColor="#999999" />;
+    if (status === 0) {
+        tag = <Tag content="Waiting" backGroundColor="red" textColor="white" />;
     }
 
     return { stt, name, start, end, amount, tag };
@@ -80,140 +80,140 @@ const data = [
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Cứu trợ đồng bào miền trung',
         '20/10/2020',
         '04/06/2021',
         150,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
     createData(
         'Hỗ trợ đồng bào miền trung',
         '23/10/2020',
         '04/06/2021',
         15000000000,
-        -1 + Math.trunc(Math.random() * 3),
+        Math.trunc(Math.random() * 3),
     ),
 ];
 
@@ -303,7 +303,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function MyTable() {
+export default function MyTable({projects}) {
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, _] = useState(10);
@@ -313,6 +313,7 @@ export default function MyTable() {
         setPage(newPage);
     };
 
+    console.log(projects);
     const filterData = (value) => {
         if (value) {
             const filtered = data.filter(d => {

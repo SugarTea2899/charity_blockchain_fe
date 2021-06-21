@@ -4,6 +4,7 @@ import { createProjectRequest, updateCreateProjectDialog, updateUserProjects } f
 import { CREATE_PROJECT_REQUEST, ON_CREATE_PROJECT_DIALOG, ON_PAGE_LOAD } from './constants';
 import * as API from '../../api';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
+import history from '../../utils/history';
 
 export function* showCreateProjectDialog({ dispatch }) {
   const dialog = {
@@ -42,10 +43,12 @@ export function* onLoad() {
 
       const userProjectsRes = yield call(API.getUserProjects, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
 
-      yield put(updateUserProjects(userProjectsRes.payload.events));
+      yield put(updateUserProjects(userProjectsRes.payload.events.reverse()));
 
       yield put(setLoading(false));
     } catch (error) {
+      localStorage.removeItem(LOCAL_STORAGE_PRIVATE_KEY);
+      history.replace('/')
       yield put(setLoading(false));
     }
   }
