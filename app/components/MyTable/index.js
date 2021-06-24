@@ -447,25 +447,26 @@ TablePaginationActions.propTypes = {
 
 
 export default function MyTable({projects}) {
-    console.log(projects)
     const [data,setData] = useState([]);
     
     const classes = useStyles();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, _] = useState(10);
+    const [rowsPerPage, _] = useState(5);
     const [rows, setRows] = useState(data)
     const [lastRows, setLastRows] = useState(data)
     const [status, setStatus] = useState("All Status")
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+
     useEffect(()=>{
-        console.log(projects)
-        projects.map((project=>{
-            data.push(createData(project.event.name,project.event.startDate,project.event.endDate,project.event.amountDonated,project.event.status))
-        }))
-    },[projects])
-    console.log(projects)
+        const temp = projects.map((project=>{
+            return createData(project.event.name,project.event.startDate,project.event.endDate,project.event.amountDonated,project.event.status)
+        }));
+        setData(temp);
+        setRows(temp.slice());
+    },[])
+
     const filterData = (value) => {
         if (value) {
             const filtered = data.filter(d => {
@@ -495,6 +496,7 @@ export default function MyTable({projects}) {
         }
         setLastRows(rows)
     }
+    
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
         if (event.target.value != 'All Status') {

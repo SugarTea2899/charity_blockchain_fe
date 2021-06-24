@@ -9,7 +9,7 @@ import { makeSelectUserProject } from '../UserPage/selectors';
 
 export const UserProjectPage = ({projects}) => {
   const classes = useStyle();
-
+  console.log(projects)
   return (
     <div className={classes.container}>
       <MyAppBar />

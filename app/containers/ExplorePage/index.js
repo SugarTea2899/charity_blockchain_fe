@@ -16,6 +16,7 @@ import {
   makeSelectExploreDonations,
   makeSelectExploreProjects,
 } from './selectors';
+import history from '../../utils/history';
 
 const key = 'explore';
 
@@ -56,7 +57,7 @@ export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
           <MyList
             title="Charity Projects"
             item={getProjectsItem()}
-            onClick={() => {}}
+            onClick={() => history.push('/projects')}
           />
         </Grid>
       </Grid>
