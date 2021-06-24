@@ -22,6 +22,7 @@ import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
 import {
+  makeSelectIsAccepted,
   makeSelectPercentAccepted,
   makeSelectProjectDetail,
 } from './selectors';
@@ -34,13 +35,17 @@ import {
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import CreateDonation from './CreateDonation';
 import { makeSelectAddress } from '../UserPage/selectors';
+import history from '../../utils/history';
+import CreateDisbursement from './CreateDisbursement';
+import { ColorButton } from '../../components/ColorButton';
 
 const key = 'projectDetail';
 
 export const ProjectDetail = ({
   onLoad,
   onAccept,
-  address,
+  isAccepted,
+  address, //creator address
   match,
   project,
   percentAccepted,
@@ -62,15 +67,21 @@ export const ProjectDetail = ({
   return (
     <div className={classes.container}>
       <CreateDonation />
+      <CreateDisbursement />
       <MyAppBar />
       <Grid container>
         <Grid container item xs={8} alignItems="flex-start">
           <Card className={classes.cardContainer}>
             <CardHeader
               title={project.name}
+              action={
+                project.status !== 2 &&
+                isOwner && <ColorButton fullWidth>End Project</ColorButton>
+              }
               classes={{
                 title: classes.cardTitle,
                 root: classes.headerRoot,
+                action: classes.action,
               }}
             />
             <CardContent style={{ padding: '0%' }}>
@@ -102,8 +113,8 @@ export const ProjectDetail = ({
               />
               <Information
                 title="Approval Rate:"
-                content={`${percentAccepted}%`}
-                customColor="#00e676"
+                content={`${percentAccepted.toFixed(2)}%`}
+                customColor={getColorFromStatusCode(project.status)}
                 isBold
               />
               <Information
@@ -125,12 +136,18 @@ export const ProjectDetail = ({
           {isLogin && !isOwner && (
             <>
               <MyCard
-                title="Accept"
+                title={isAccepted ? 'Accepted' : 'Accept'}
                 content=""
-                helper="accept this project"
-                color="#2196f3"
+                helper={
+                  isAccepted
+                    ? 'you have accepted this project'
+                    : 'accept this project'
+                }
+                color={isAccepted ? '#bdbdbd' : '#2196f3'}
                 icon={<ThumbUpAltIcon className={classes.icon} />}
-                onClick={onAccept}
+                onClick={
+                  isAccepted ? () => {} : () => onAccept(match.params.id)
+                }
               />
             </>
           )}
@@ -144,13 +161,14 @@ export const ProjectDetail = ({
               icon={<SendIcon className={classes.icon} />}
             />
           )}
-          
+
           <MyCard
             title="History"
             content=""
             helper="All transactions related to this project"
             color="#1976d2"
             icon={<HistoryIcon className={classes.icon} />}
+            onClick={() => history.push(`/projects/${match.params.id}/history`)}
           />
 
           {isLogin && isOwner && (
@@ -187,6 +205,10 @@ const useStyle = makeStyles({
   headerRoot: {
     borderBottom: '1px #e0e0e0 solid',
   },
+  action: {
+    width: '20%',
+    paddingTop: '0.6%',
+  },
   cardContainer: {
     marginTop: '3%',
     marginLeft: '3%',
@@ -203,12 +225,13 @@ const mapStateToProps = createStructuredSelector({
   project: makeSelectProjectDetail(),
   percentAccepted: makeSelectPercentAccepted(),
   address: makeSelectAddress(),
+  isAccepted: makeSelectIsAccepted(),
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     onLoad: address => dispatch(onPageLoad(address)),
-    onAccept: () => dispatch(onAccept(dispatch)),
+    onAccept: address => dispatch(onAccept(dispatch, address)),
   };
 };
 

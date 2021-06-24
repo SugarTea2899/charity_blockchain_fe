@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { setLoading, updateAlert } from '../App/actions';
-import { createProjectRequest, updateCreateProjectDialog, updateUserProjects } from './actions';
+import { createProjectRequest, updateCreateProjectDialog, updateUserInfo, updateUserProjects } from './actions';
 import { CREATE_PROJECT_REQUEST, ON_CREATE_PROJECT_DIALOG, ON_PAGE_LOAD } from './constants';
 import * as API from '../../api';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
@@ -42,11 +42,14 @@ export function* onLoad() {
       yield put(setLoading(true));
 
       const userProjectsRes = yield call(API.getUserProjects, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
-
+      const result = yield call(API.getWallet, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
+      
+      yield put(updateUserInfo(result.payload.address, result.payload.balance));
       yield put(updateUserProjects(userProjectsRes.payload.events.reverse()));
 
       yield put(setLoading(false));
     } catch (error) {
+      console.log(error.message);
       localStorage.removeItem(LOCAL_STORAGE_PRIVATE_KEY);
       history.replace('/')
       yield put(setLoading(false));

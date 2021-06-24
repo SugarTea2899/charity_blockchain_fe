@@ -127,13 +127,6 @@ export const UserPage = ({
             icon={<AddBoxIcon className={classes.icon} />}
             onClick={onCreateProject}
           />
-          <MyCard
-            color="#004d40"
-            title="Disbursement Request"
-            content=""
-            helper="5 requests waiting for your approve"
-            icon={<NotificationsIcon className={classes.icon} />}
-          />
         </Grid>
       </Grid>
     </div>

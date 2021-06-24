@@ -2,6 +2,7 @@ import {
   ACCEPT_PROJECT,
   ON_ACCEPT,
   ON_PAGE_LOAD,
+  UPDATE_IS_ACCEPTED,
   UPDATE_PROJECT_DETAIL,
 } from './constants';
 
@@ -26,3 +27,8 @@ export const updateProjectDetail = (projectDetail, percentAccepted) => ({
   projectDetail,
   percentAccepted
 });
+
+export const updateIsAccepted = (isAccepted) => ({
+  type: UPDATE_IS_ACCEPTED,
+  isAccepted
+})

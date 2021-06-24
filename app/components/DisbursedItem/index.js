@@ -23,18 +23,13 @@ export const DisbursedItem = () => {
           </Grid>
         </Grid>
         <Grid container item xs={4} alignItems="center">
-          <Typography
-            style={{ color: '#66bb6a', fontSize: '0.8rem', fontWeight: 'bold', marginLeft: '15%' }}
-          >
-            Accepted
-          </Typography>
-        </Grid>
-        <Grid container item xs={4} direction="column" justify="center">
-          <Typography className={classes.blueText}>
-            <span style={{ color: 'black' }}>Amount: </span> 12.000
-          </Typography>
           <Typography className={classes.blueText}>
             <span style={{ color: 'black' }}>Reason: </span> Mua mì ăn liền
+          </Typography>
+        </Grid>
+        <Grid container item xs={4} alignItems="center" justify='flex-end' style={{paddingRight: '2%'}}>
+          <Typography className={classes.blueText}>
+            <span style={{ color: 'black' }}>Amount: </span> 12.000
           </Typography>
         </Grid>
       </Grid>
@@ -44,7 +39,7 @@ export const DisbursedItem = () => {
 
 const useStyle = makeStyles({
   container: {
-    marginBottom: '2%',
+    marginBottom: '2.45%',
     paddingBottom: '2%',
     paddingRight: '2.5%',
     borderBottom: '1px solid #e0e0e0',

@@ -9,13 +9,20 @@ const makeSelectProjectDetail = () =>
     projectDetail => projectDetail.projectDetail,
   );
 
-  const makeSelectPercentAccepted = () =>
+const makeSelectPercentAccepted = () =>
   createSelector(
     selectProjectDetail,
     projectDetail => projectDetail.percentAccepted,
   );
-  
+
+const makeSelectIsAccepted = () =>
+  createSelector(
+    selectProjectDetail,
+    projectDetail => projectDetail.isAccepted,
+  );
+
 export {
   makeSelectProjectDetail,
-  makeSelectPercentAccepted
+  makeSelectPercentAccepted,
+  makeSelectIsAccepted,
 };

@@ -31,7 +31,7 @@ export const ProjectItemExpand = ({name, address, timestamp, status, amountDonat
             <span style={{ color: 'black', fontWeight: 'normal' }}>
               Approval Rate:{' '}
             </span>{' '}
-            {`${percentAccepted}%`}
+            {`${percentAccepted.toFixed(2)}%`}
           </Typography>
           <Typography
             className={classes.blueText}
