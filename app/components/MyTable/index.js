@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles, useTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -19,6 +19,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Tag from '../Tag';
 import { FormControl, MenuItem } from '@material-ui/core';
+import { getDate } from 'date-fns';
+import { formatDate } from '../../utils/helpers';
 let stt = 0;
 const columns = [
     { id: 'stt', label: '#', minWidth: 10 },
@@ -46,7 +48,7 @@ const columns = [
     },
 ];
 
-function createData(name, start, end, amount, status) {
+function createData(name, startDate, endDate, amount, status) {
     stt += 1;
     let tag;
     if (status === 1) {
@@ -62,7 +64,8 @@ function createData(name, start, end, amount, status) {
     if (status === 0) {
         tag = <Tag content="Waiting" backGroundColor="red" textColor="white" />;
     }
-
+    let start = formatDate(new Date(startDate)).toLocaleString()
+    let end = formatDate(new Date(endDate)).toLocaleString()
     return { stt, name, start, end, amount, tag };
 }
 
@@ -73,149 +76,287 @@ const StyledTableCell = withStyles(theme => ({
     },
 }))(TableCell);
 
-const data = [
-
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Cứu trợ đồng bào miền trung',
-        '20/10/2020',
-        '04/06/2021',
-        150,
-        Math.trunc(Math.random() * 3),
-    ),
-    createData(
-        'Hỗ trợ đồng bào miền trung',
-        '23/10/2020',
-        '04/06/2021',
-        15000000000,
-        Math.trunc(Math.random() * 3),
-    ),
-];
+// const data=[
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '11/04/2021',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '20/04/2021',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Cứu trợ đồng bào miền trung',
+//         '04/03/2020',
+//         '04/06/2021',
+//         150,
+//         Math.trunc(Math.random() * 3),
+//     ),
+//     createData(
+//         'Hỗ trợ đồng bào miền trung',
+//         '10/23/2020',
+//         '04/06/2021',
+//         15000000000,
+//         Math.trunc(Math.random() * 3),
+//     ),
+// ];
 
 const useStyles = makeStyles({
     root: {
@@ -303,26 +444,47 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
+
+
 export default function MyTable({projects}) {
+    console.log(projects)
+    const [data,setData] = useState([]);
+    
     const classes = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, _] = useState(10);
     const [rows, setRows] = useState(data)
+    const [lastRows, setLastRows] = useState(data)
     const [status, setStatus] = useState("All Status")
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    console.log(projects);
+    useEffect(()=>{
+        console.log(projects)
+        projects.map((project=>{
+            data.push(createData(project.event.name,project.event.startDate,project.event.endDate,project.event.amountDonated,project.event.status))
+        }))
+    },[projects])
+    console.log(projects)
     const filterData = (value) => {
         if (value) {
             const filtered = data.filter(d => {
                 if (d.name.search(new RegExp(value, "i")) >= 0
                     || d.start.search(new RegExp(value, "i")) >= 0
                     || d.end.search(new RegExp(value, "i")) >= 0
-                    || d.amount === parseInt(value)
-                    || d.tag.props.content.search(new RegExp(value, "i")) >= 0) {
-                    return d;
+                    || d.amount === parseInt(value)){
+                        setPage(0);
+                        if(status === "All Status")
+                        {
+                            return d;
+                        }
+                        else
+                        {
+                            if(d.tag.props.content===status)
+                            {
+                                return d;
+                            }
+                        }
                 }
             });
 
@@ -331,18 +493,20 @@ export default function MyTable({projects}) {
         } else {
             setRows(data)
         }
+        setLastRows(rows)
     }
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
         if (event.target.value != 'All Status') {
-            const filtered = data.filter(d => {
+            const filtered = lastRows.filter(d => {
                 if (d.tag.props.content.search(new RegExp(event.target.value, "i")) >= 0) {
+                    setPage(0)
                     return d;
                 }
             });
             setRows(filtered)
         } else {
-            setRows(data)
+            setRows(lastRows)
         }
 
     };
@@ -354,7 +518,8 @@ export default function MyTable({projects}) {
                 placeholder="Search"
                 variant="outlined"
                 style={{ paddingBottom: '1%', width: '80%' }}
-                onChange={(e) => filterData(e.target.value)}
+                onChange={(e) => {
+                    filterData(e.target.value)}}
             />
             <FormControl  style={{ width: '20%', paddingLeft: '2%' }} className={classes.formControl}>
             <InputLabel style={{ width: '50%', paddingLeft: '13%' }} id ="demo-simple-select-outlined-label">Status</InputLabel>
