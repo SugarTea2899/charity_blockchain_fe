@@ -19,7 +19,7 @@ import DonationPage from '../DonationPage';
 import UserProjectPage from '../UserProjectPage';
 import UserDonationPage from '../UserDonationPage';
 import { ProjectDonationsPage } from '../ProjectDonationPage';
-
+import { ProjectDisbursementPage } from '../ProjectDisbursementPage';
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
   const globalState = useSelector(state => state.global);
@@ -35,6 +35,7 @@ export function App({ alert, confirmAlert }) {
         <Route path="/user/donations" component={UserDonationPage} />
         <Route path="/user" component={UserPage} />
         <Route path="/explore" component={ExplorePage} />
+        <Route path="/projects/:id/disbursement" component={ProjectDisbursementPage} />
         <Route path="/projects/:id/donation" component={ProjectDonationsPage} />
         <Route path="/projects/:id/history" component={ProjectExplore} />
         <Route path="/projects/:id" component={ProjectDetail} />
