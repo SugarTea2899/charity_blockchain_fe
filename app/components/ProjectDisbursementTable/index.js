@@ -25,8 +25,8 @@ const columns = [
     { id: 'from', label: 'From', minWidth: 110,align:'center' },
     { id: 'date', label: 'Date', minWidth: 110,align:'center' },
     {
-        id: 'resson',
-        label: 'Resson',
+        id: 'reason',
+        label: 'Reason',
         minWidth: 100,
         align: 'center',
         format: value => value.toLocaleString('en-US'),
@@ -40,11 +40,11 @@ const columns = [
     },
 ];
 
-function createData(id,from,date, resson, amount) {
+function createData(id,from,date, reason, amount) {
     
 
 
-    return { id,from,date, resson, amount };
+    return { id,from,date, reason, amount };
 }
 
 const StyledTableCell = withStyles(theme => ({
