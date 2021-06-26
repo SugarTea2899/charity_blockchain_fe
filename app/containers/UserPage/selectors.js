@@ -26,7 +26,13 @@ const makeSelectUserProject = () =>
     selectUser,
     userState => userState.projects,
   );
-  
+
+const makeSelectUserDonations = () =>
+  createSelector(
+    selectUser,
+    userState => userState.donations,
+  );
+
 const makeSelectAddAmountDialog = () =>
   createSelector(
     selectUser,
@@ -39,4 +45,5 @@ export {
   makeSelectCreateProject,
   makeSelectUserProject,
   makeSelectAddAmountDialog,
+  makeSelectUserDonations,
 };

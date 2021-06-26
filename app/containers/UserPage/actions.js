@@ -6,6 +6,7 @@ import {
   OPEN_ADD_AMOUNT_DIALOG,
   UPDATE_ADD_AMOUNT_DIALOG,
   UPDATE_CREATE_PROJECT_DIALOG,
+  UPDATE_USER_DONATIONS,
   UPDATE_USER_INFO,
   UPDATE_USER_PROJECTS,
 } from './constants';
@@ -37,21 +38,27 @@ export const updateUserProjects = projects => ({
   projects,
 });
 
+export const updateUserDonations = donations => ({
+  type: UPDATE_USER_DONATIONS,
+  donations,
+});
+
 export const onPageLoad = () => ({
   type: ON_PAGE_LOAD,
 });
 
-export const updateAddAmountDialog = (addAmountDialog) => ({
+export const updateAddAmountDialog = addAmountDialog => ({
   type: UPDATE_ADD_AMOUNT_DIALOG,
-  addAmountDialog
-})
+  addAmountDialog,
+});
 
-export const openAddAmountDialog = (dispatch) => ({
+export const openAddAmountDialog = dispatch => ({
   type: OPEN_ADD_AMOUNT_DIALOG,
-  dispatch
+  dispatch,
 });
 
-export const addAmount = (amount) => ({
+export const addAmount = amount => ({
   type: ADD_AMOUNT,
-  amount
+  amount,
 });
+

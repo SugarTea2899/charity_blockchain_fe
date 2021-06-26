@@ -20,6 +20,6 @@ export const fetchData = async (method, url, data, privateKey) => {
 
     return response.data;
   } catch (error) {
-    throw Error(error.response.data);
+    throw Error(error.response.data.message);
   }
 }

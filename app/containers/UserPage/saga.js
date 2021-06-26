@@ -6,6 +6,7 @@ import {
   onPageLoad,
   updateAddAmountDialog,
   updateCreateProjectDialog,
+  updateUserDonations,
   updateUserInfo,
   updateUserProjects,
 } from './actions';
@@ -66,23 +67,26 @@ export function* onLoad() {
         API.getUserProjects,
         localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY),
       );
+
+      const userDonationsRes = yield call(
+        API.getUserDonations,
+        localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY),
+      );
+
       const result = yield call(
         API.getWallet,
         localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY),
       );
-
+      
+      console.log(userDonationsRes)
       yield put(updateUserInfo(result.payload.address, result.payload.balance));
+      yield put(updateUserProjects(userProjectsRes.payload.events.reverse()));
       yield put(
-        updateUserProjects(
-          userProjectsRes.payload.events
-            .reverse()
-            .filter((item, index) => index < 5),
-        ),
+        updateUserDonations(userDonationsRes.payload.transactions.reverse()),
       );
 
       yield put(setLoading(false));
     } catch (error) {
-      console.log(error.message);
       localStorage.removeItem(LOCAL_STORAGE_PRIVATE_KEY);
       history.replace('/');
       yield put(setLoading(false));
@@ -122,5 +126,5 @@ export default function* userSaga() {
   yield takeLatest(CREATE_PROJECT_REQUEST, createProject);
   yield takeLatest(ON_PAGE_LOAD, onLoad);
   yield takeLatest(OPEN_ADD_AMOUNT_DIALOG, openAddAmountDialog);
-  yield takeLatest(ADD_AMOUNT, addAmountSaga)
+  yield takeLatest(ADD_AMOUNT, addAmountSaga);
 }

@@ -1,0 +1,3 @@
+export const LOAD_PROJECT_DONATIONS = 'projectExplorePage/LOAD_PROJECT_DONATIONS';
+
+export const UPDATE_PROJECT_DONATIONS = 'projectExplorePage/UPDATE_PROJECT_DONATIONS';

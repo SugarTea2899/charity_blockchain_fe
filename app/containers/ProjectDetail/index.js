@@ -27,6 +27,7 @@ import {
   makeSelectIsAccepted,
   makeSelectPercentAccepted,
   makeSelectProjectDetail,
+  makeSelectTotalDisbursement,
 } from './selectors';
 import {
   formatDate,
@@ -54,6 +55,7 @@ export const ProjectDetail = ({
   match,
   project,
   percentAccepted,
+  totalDisbursement,
   donationDialog,
   endDialog,
 }) => {
@@ -130,7 +132,7 @@ export const ProjectDetail = ({
                 content={project.amountDonated}
                 markBlue
               />
-              <Information title="Disbursed:" content="100000" markBlue />
+              <Information title="Disbursed:" content={totalDisbursement} markBlue />
             </CardContent>
           </Card>
         </Grid>
@@ -236,7 +238,8 @@ const mapStateToProps = createStructuredSelector({
   address: makeSelectAddress(),
   isAccepted: makeSelectIsAccepted(),
   donationDialog: makeSelectDonationDialog(),
-  endDialog: makeSelectEndDialog()
+  endDialog: makeSelectEndDialog(),
+  totalDisbursement: makeSelectTotalDisbursement(),
 });
 
 const mapDispatchToProps = dispatch => {

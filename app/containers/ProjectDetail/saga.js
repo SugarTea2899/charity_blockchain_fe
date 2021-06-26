@@ -19,7 +19,7 @@ export function* onPageLoad({ address }) {
 
     const result = yield call(API.getProjectDetail, address);
 
-    yield put(updateProjectDetail(result.event, result.percentAccepted));
+    yield put(updateProjectDetail(result.event, result.percentAccepted, result.totalDisbursement));
 
     if (localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
       const checkAcceptResult = yield call(
@@ -97,7 +97,13 @@ export function* sendDonationSaga({dispatch, address, amount}) {
     yield put(updateAlert(alert));
     yield put(setLoading(false));
   } catch (error) {
-    console.log(error.message);
+    const alert = {
+      open: true,
+      title: 'Error',
+      content: error.message,
+      onClose: () => dispatch(updateAlert({ open: false })),
+    };
+    yield put(updateAlert(alert));
     yield put(setLoading(false));
   }
 }

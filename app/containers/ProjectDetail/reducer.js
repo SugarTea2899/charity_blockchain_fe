@@ -14,6 +14,7 @@ export const initialState = {
     endDate: '1/1/2020',
     amountDonated: 0,
   },
+  totalDisbursement: 0,
   percentAccepted: 0,
   isAccepted: false,
   donationDialog: {
@@ -26,6 +27,11 @@ export const initialState = {
     onSend: () => {},
     onClose: () => {},
   },
+  disbursementDialog: {
+    open: false,
+    onSend: () => {},
+    onClose: () => {}
+  }
 };
 
 const projectDetailReducer = (state = initialState, action) => {
@@ -35,6 +41,7 @@ const projectDetailReducer = (state = initialState, action) => {
         ...state,
         projectDetail: action.projectDetail,
         percentAccepted: action.percentAccepted,
+        totalDisbursement: action.totalDisbursement
       };
     case UPDATE_IS_ACCEPTED:
       return { ...state, isAccepted: action.isAccepted };

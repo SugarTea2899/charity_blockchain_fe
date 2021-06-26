@@ -1,9 +1,16 @@
-import { UPDATE_ADD_AMOUNT_DIALOG, UPDATE_CREATE_PROJECT_DIALOG, UPDATE_USER_INFO, UPDATE_USER_PROJECTS } from './constants';
+import {
+  UPDATE_ADD_AMOUNT_DIALOG,
+  UPDATE_CREATE_PROJECT_DIALOG,
+  UPDATE_USER_DONATIONS,
+  UPDATE_USER_INFO,
+  UPDATE_USER_PROJECTS,
+} from './constants';
 
 export const initialState = {
   address: '',
   balance: 0,
   projects: [],
+  donations: [],
   createProjectDialog: {
     open: false,
     onClose: () => {},
@@ -12,8 +19,8 @@ export const initialState = {
   addAmountDialog: {
     open: false,
     onClose: () => {},
-    onSend: () => {}
-  }
+    onSend: () => {},
+  },
 };
 
 const userReducer = (state = initialState, action) => {
@@ -23,9 +30,11 @@ const userReducer = (state = initialState, action) => {
     case UPDATE_CREATE_PROJECT_DIALOG:
       return { ...state, createProjectDialog: action.dialog };
     case UPDATE_USER_PROJECTS:
-      return {...state, projects: action.projects.slice()};
+      return { ...state, projects: action.projects.slice() };
     case UPDATE_ADD_AMOUNT_DIALOG:
-      return {...state, addAmountDialog: action.addAmountDialog}
+      return { ...state, addAmountDialog: action.addAmountDialog };
+    case UPDATE_USER_DONATIONS:
+      return { ...state, donations: action.donations.slice() };
     default:
       return state;
   }

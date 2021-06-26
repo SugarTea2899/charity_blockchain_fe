@@ -55,3 +55,7 @@ export const addAmount = (amount, privateKey) => {
 export const getDonations = () => {
   return fetchData('get', '/donations');
 }
+
+export const getUserDonations = (privateKey) => {
+  return fetchData('get', '/transaction/mine', undefined, privateKey)
+}

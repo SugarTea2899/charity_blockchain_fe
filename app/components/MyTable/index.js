@@ -466,6 +466,7 @@ export default function MyTable({projects}) {
         }));
         setData(temp);
         setRows(temp.slice());
+        setLastRows(temp.slice());
     },[projects])
 
     const filterData = (value) => {

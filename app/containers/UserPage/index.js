@@ -23,10 +23,15 @@ import {
   makeSelectAddress,
   makeSelectBalance,
   makeSelectCreateProject,
+  makeSelectUserDonations,
   makeSelectUserProject,
 } from './selectors';
 import CreateProject from './CreateProject';
-import { onCreateProjectDialog, onPageLoad, openAddAmountDialog } from './actions';
+import {
+  onCreateProjectDialog,
+  onPageLoad,
+  openAddAmountDialog,
+} from './actions';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import history from '../../utils/history';
 import AddAmount from './AddAmount';
@@ -37,11 +42,12 @@ export const UserPage = ({
   address,
   balance,
   userProjects,
+  userDonations,
   createProjectDialog,
   addAmountDialog,
   onCreateProject,
   onLoad,
-  onAddAmount
+  onAddAmount,
 }) => {
   const classes = useStyle();
   useInjectReducer({ key, reducer });
@@ -52,11 +58,19 @@ export const UserPage = ({
   }, []);
 
   const getProjectItems = () => {
-    return userProjects.map((item, index) => <ProjectItem key={index} {...item.event} />)
+    return userProjects
+      .filter((item, index) => index < 5)
+      .map((item, index) => <ProjectItem key={index} {...item.event} />);
+  };
+
+  const getDonationItems = () => {
+    return userDonations
+      .filter((item, index) => index < 5)
+      .map((item, index) => <DonateItem key={index} {...item} />);
   }
 
   if (!localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
-    history.push('/')
+    history.push('/');
   }
   return (
     <div className={classes.container}>
@@ -99,13 +113,7 @@ export const UserPage = ({
         <Grid container item xs={4}>
           <MyList
             title="Your donations"
-            item={[
-              <DonateItem />,
-              <DonateItem />,
-              <DonateItem />,
-              <DonateItem />,
-              <DonateItem />,
-            ]}
+            item={getDonationItems()}
             onClick={() => {}}
           />
         </Grid>
@@ -156,14 +164,15 @@ const mapStateToProps = createStructuredSelector({
   balance: makeSelectBalance(),
   createProjectDialog: makeSelectCreateProject(),
   userProjects: makeSelectUserProject(),
-  addAmountDialog: makeSelectAddAmountDialog()
+  userDonations: makeSelectUserDonations(),
+  addAmountDialog: makeSelectAddAmountDialog(),
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     onCreateProject: () => dispatch(onCreateProjectDialog(dispatch)),
     onLoad: () => dispatch(onPageLoad()),
-    onAddAmount: () => dispatch(openAddAmountDialog(dispatch))
+    onAddAmount: () => dispatch(openAddAmountDialog(dispatch)),
   };
 };
 

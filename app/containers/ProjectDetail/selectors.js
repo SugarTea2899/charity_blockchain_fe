@@ -15,6 +15,12 @@ const makeSelectPercentAccepted = () =>
     projectDetail => projectDetail.percentAccepted,
   );
 
+const makeSelectTotalDisbursement = () =>
+  createSelector(
+    selectProjectDetail,
+    projectDetail => projectDetail.totalDisbursement,
+  );
+
 const makeSelectIsAccepted = () =>
   createSelector(
     selectProjectDetail,
@@ -37,5 +43,6 @@ export {
   makeSelectPercentAccepted,
   makeSelectIsAccepted,
   makeSelectDonationDialog,
-  makeSelectEndDialog
+  makeSelectEndDialog,
+  makeSelectTotalDisbursement
 };

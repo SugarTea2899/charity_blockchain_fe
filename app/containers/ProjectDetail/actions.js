@@ -31,10 +31,11 @@ export const acceptProject = address => ({
   address,
 });
 
-export const updateProjectDetail = (projectDetail, percentAccepted) => ({
+export const updateProjectDetail = (projectDetail, percentAccepted, totalDisbursement) => ({
   type: UPDATE_PROJECT_DETAIL,
   projectDetail,
   percentAccepted,
+  totalDisbursement
 });
 
 export const updateIsAccepted = isAccepted => ({
