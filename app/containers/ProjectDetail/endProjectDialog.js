@@ -9,48 +9,46 @@ import {
 } from '@material-ui/core';
 import { ColorButton } from '../../components/ColorButton';
 import { useSelector } from 'react-redux';
-import { makeSelectBalance } from '../UserPage/selectors';
+import { TramRounded } from '@material-ui/icons';
 
-const CreateDonation = ({ open, onClose, onSend, address }) => {
+const EndProjectDialog = ({ open, onClose, onSend }) => {
   const classes = useStyle();
-  const [amount, setAmount] = useState('');
-  const [amountError, setAmountError] = useState('');
-
-  const balance = useSelector(makeSelectBalance());
+  const [privateKey, setPrivateKey] = useState('');
+  const [privateKeyError, setPrivateKeyError] = useState('');
 
   useEffect(() => {
-    if (amount <= balance) setAmountError('');
-    else setAmountError('You not enough coin to send');
-  }, [amount]);
+    if (privateKey.length === 64) setPrivateKeyError('');
+    else setPrivateKeyError('Private key is invalid');
+  }, [privateKey]);
+
 
   return (
     <Dialog open={open} fullWidth onClose={onClose}>
-      <DialogTitle>{'Create Donation'}</DialogTitle>
+      <DialogTitle>{'End Project'}</DialogTitle>
       <DialogContent>
         <TextField
-          style={{ marginBottom: '2%' }}
-          type="number"
+          style={{ marginBottom: '3%' }}
           fullWidth
-          label="Amount"
-          value={`${amount}`}
-          onChange={e => setAmount(e.target.value)}
-          helperText={amountError}
-          error={amountError !== ''}
+          label="Project Private key"
+          value={`${privateKey}`}
+          onChange={e => setPrivateKey(e.target.value)}
+          helperText={privateKeyError}
+          error={privateKeyError !== ''}
         />
       </DialogContent>
       <DialogActions>
         <ColorButton
           onClick={() => {
-            if (amountError !== '') return;
+            if (privateKeyError !== '') return;
 
-            setAmount('');
+            setPrivateKey('');
+            onSend(privateKey);
             onClose();
-            onSend(address, amount);
           }}
           fullWidth
           className={classes.sendButton}
         >
-          send
+          END
         </ColorButton>
       </DialogActions>
     </Dialog>
@@ -65,4 +63,4 @@ const useStyle = makeStyles({
   },
 });
 
-export default CreateDonation;
+export default EndProjectDialog;

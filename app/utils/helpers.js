@@ -23,6 +23,7 @@ export const formatDate = date => {
 export const formatDateTime = date => {
   return date.toLocaleTimeString() + ', ' + formatDate(date);
 }
+
 export const getStatusFromStatusCode = statusCode => {
   switch (statusCode) {
     case 0:
@@ -43,7 +44,7 @@ export const getColorFromStatusCode = statusCode => {
     case 1:
       return '#66bb6a';
     case 2:
-      return 'blue';
+      return '#bdbdbd';
     default:
       return 'black';
   }

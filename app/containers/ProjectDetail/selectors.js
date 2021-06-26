@@ -21,8 +21,21 @@ const makeSelectIsAccepted = () =>
     projectDetail => projectDetail.isAccepted,
   );
 
+const makeSelectDonationDialog = () =>
+  createSelector(
+    selectProjectDetail,
+    projectDetail => projectDetail.donationDialog,
+  );
+
+const makeSelectEndDialog = () =>
+  createSelector(
+    selectProjectDetail,
+    projectDetail => projectDetail.endDialog,
+  );
 export {
   makeSelectProjectDetail,
   makeSelectPercentAccepted,
   makeSelectIsAccepted,
+  makeSelectDonationDialog,
+  makeSelectEndDialog
 };

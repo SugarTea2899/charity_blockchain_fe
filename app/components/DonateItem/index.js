@@ -22,9 +22,12 @@ export const DonateItem = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item xs={5} alignItems="center">
+        <Grid container item xs={5} justify='center' direction='column'>
           <Typography className={classes.blueText}>
             <span style={{ color: 'black' }}>To </span> Từ thiện miền Trung
+          </Typography>
+          <Typography className={classes.blueText}>
+            <span style={{ color: '#00e676', fontWeight: 'bold' }}>Success</span> 
           </Typography>
         </Grid>
         <Grid container item xs={3} justify="flex-end" alignItems="center">

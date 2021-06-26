@@ -35,3 +35,15 @@ export const acceptProject = (privateKey, address) => {
 export const checkIsAccepted = (privateKey, address) => {
   return fetchData('post', '/event/checkAccept', {address}, privateKey);
 }
+
+export const sendDonation = (privateKey, amount, receiptAddress) => {
+  return fetchData('post', '/transaction', {amount, receiptAddress}, privateKey);
+}
+
+export const getProjectDonations = (address) => {
+  return fetchData('get', `/event/donate?address=${address}`);
+}
+
+export const endProject = (projectPrivateKey) => {
+  return fetchData('post', 'event/end', undefined, projectPrivateKey);
+}

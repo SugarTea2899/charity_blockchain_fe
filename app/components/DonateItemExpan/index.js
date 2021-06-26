@@ -22,7 +22,7 @@ export const DonateItemExpand = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item xs={5} direction="column">
+        <Grid container item xs={4} direction="column">
           <Typography className={classes.blueText}>
             <span style={{ color: 'black' }}>From </span> 1252157484
           </Typography>
@@ -30,7 +30,12 @@ export const DonateItemExpand = () => {
             <span style={{ color: 'black' }}>To </span> Từ thiện miền Trung
           </Typography>
         </Grid>
-        <Grid container item xs={3} justify="flex-end" alignItems="center">
+        <Grid container item xs={2} alignItems="center">
+          <Typography className={classes.blueText}>
+            <span style={{ color: '#00e676', fontWeight: 'bold' }}>Success</span>
+          </Typography>
+        </Grid>
+        <Grid container item xs={2} justify="flex-end" alignItems="center">
           <Typography className={classes.blueText}>
             <span style={{ color: 'black' }}>Amount: </span> 10
           </Typography>

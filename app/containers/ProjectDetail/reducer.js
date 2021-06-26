@@ -1,4 +1,9 @@
-import { UPDATE_IS_ACCEPTED, UPDATE_PROJECT_DETAIL } from './constants';
+import {
+  UPDATE_DONATION_DIALOG,
+  UPDATE_END_DIALOG,
+  UPDATE_IS_ACCEPTED,
+  UPDATE_PROJECT_DETAIL,
+} from './constants';
 
 export const initialState = {
   projectDetail: {
@@ -11,6 +16,16 @@ export const initialState = {
   },
   percentAccepted: 0,
   isAccepted: false,
+  donationDialog: {
+    open: false,
+    onSend: () => {},
+    onClose: () => {},
+  },
+  endDialog: {
+    open: false,
+    onSend: () => {},
+    onClose: () => {},
+  },
 };
 
 const projectDetailReducer = (state = initialState, action) => {
@@ -23,6 +38,10 @@ const projectDetailReducer = (state = initialState, action) => {
       };
     case UPDATE_IS_ACCEPTED:
       return { ...state, isAccepted: action.isAccepted };
+    case UPDATE_DONATION_DIALOG:
+      return { ...state, donationDialog: action.donationDialog };
+    case UPDATE_END_DIALOG:
+      return { ...state, endDialog: action.endDialog };
     default:
       return state;
   }

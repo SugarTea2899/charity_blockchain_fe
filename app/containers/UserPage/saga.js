@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { setLoading, updateAlert } from '../App/actions';
-import { createProjectRequest, updateCreateProjectDialog, updateUserInfo, updateUserProjects } from './actions';
+import { createProjectRequest, onPageLoad, updateCreateProjectDialog, updateUserInfo, updateUserProjects } from './actions';
 import { CREATE_PROJECT_REQUEST, ON_CREATE_PROJECT_DIALOG, ON_PAGE_LOAD } from './constants';
 import * as API from '../../api';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
@@ -19,12 +19,13 @@ export function* showCreateProjectDialog({ dispatch }) {
 export function* createProject({ project, dispatch }) {
   try {
     yield put(setLoading(true));
-    yield call(API.createProject, project, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
+    const result = yield call(API.createProject, project, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
+    yield put(onPageLoad());
 
     const alert = {
       open: true,
       title: 'Alert',
-      content: `Project is created successfully.`,
+      content: `Project is created successfully. Project private key: ${result.payload.privateKey}.`,
       onClose: () => dispatch(updateAlert({ open: false })),
     };
 
@@ -45,7 +46,7 @@ export function* onLoad() {
       const result = yield call(API.getWallet, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY));
       
       yield put(updateUserInfo(result.payload.address, result.payload.balance));
-      yield put(updateUserProjects(userProjectsRes.payload.events.reverse()));
+      yield put(updateUserProjects(userProjectsRes.payload.events.reverse().filter((item, index) => index < 5)));
 
       yield put(setLoading(false));
     } catch (error) {

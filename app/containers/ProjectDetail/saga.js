@@ -1,9 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { setLoading, updateConfirmAlert } from '../App/actions';
+import { setLoading, updateAlert, updateConfirmAlert } from '../App/actions';
 import * as API from '../../api';
-import { ACCEPT_PROJECT, ON_ACCEPT, ON_PAGE_LOAD } from './constants';
+import { ACCEPT_PROJECT, END_PROJECT, ON_ACCEPT, ON_END_PROJECT, ON_PAGE_LOAD, OPEN_DONATION_DIALOG, SEND_DONATION_DIALOG } from './constants';
 import {
   acceptProject,
+  endProject,
+  sendDonation,
+  updateDonationDialog,
+  updateEndDialog,
   updateIsAccepted,
   updateProjectDetail,
 } from './actions';
@@ -67,8 +71,64 @@ export function* acceptProjectSaga({ address }) {
   }
 }
 
+export function* openDonation({dispatch}) {
+  const donationDialog = {
+    open: true,
+    onClose: () => dispatch(updateDonationDialog({open: false})),
+    onSend: (address, amount) => dispatch(sendDonation(dispatch ,address, amount))
+  }
+
+  yield put(updateDonationDialog(donationDialog));
+}
+
+export function* sendDonationSaga({dispatch, address, amount}) {
+  try {
+    yield put(setLoading(true));
+
+    yield call(API.sendDonation, localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY), amount, address);
+    
+    const alert = {
+      open: true,
+      title: 'Alert',
+      content: `Donate successfully.`,
+      onClose: () => dispatch(updateAlert({ open: false })),
+    };
+
+    yield put(updateAlert(alert));
+    yield put(setLoading(false));
+  } catch (error) {
+    console.log(error.message);
+    yield put(setLoading(false));
+  }
+}
+
+export function* endProjectConfirm({dispatch}) {
+  const dialog = {
+    open: true,
+    onClose: () => dispatch(updateEndDialog({open: false})),
+    onSend: (projectPrivateKey) => dispatch(endProject(projectPrivateKey))
+  };
+
+  yield put(updateEndDialog(dialog));
+}
+
+export function* endProjectSaga({projectPrivateKey}) {
+  try {
+    yield put(setLoading(true));
+    yield call(API.endProject, projectPrivateKey);
+    yield put(setLoading(false));
+  } catch (error) {
+    console.log(error.message);
+    yield put(setLoading(false));
+  }
+}
+
 export default function* projectDetailSaga() {
   yield takeLatest(ON_PAGE_LOAD, onPageLoad);
   yield takeLatest(ON_ACCEPT, onAccept);
   yield takeLatest(ACCEPT_PROJECT, acceptProjectSaga);
+  yield takeLatest(OPEN_DONATION_DIALOG, openDonation);
+  yield takeLatest(SEND_DONATION_DIALOG, sendDonationSaga);
+  yield takeLatest(ON_END_PROJECT, endProjectConfirm);
+  yield takeLatest(END_PROJECT, endProjectSaga);
 }

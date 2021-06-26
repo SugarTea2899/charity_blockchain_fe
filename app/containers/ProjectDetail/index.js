@@ -16,12 +16,14 @@ import SendIcon from '@material-ui/icons/Send';
 import HistoryIcon from '@material-ui/icons/History';
 import PaymentIcon from '@material-ui/icons/Payment';
 import MyCard from '../UserPage/MyCard';
-import { onAccept, onPageLoad } from './actions';
+import { onAccept, onEndProject, onPageLoad, openDonationDialog } from './actions';
 import saga from './saga';
 import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
 import {
+  makeSelectDonationDialog,
+  makeSelectEndDialog,
   makeSelectIsAccepted,
   makeSelectPercentAccepted,
   makeSelectProjectDetail,
@@ -38,17 +40,22 @@ import { makeSelectAddress } from '../UserPage/selectors';
 import history from '../../utils/history';
 import CreateDisbursement from './CreateDisbursement';
 import { ColorButton } from '../../components/ColorButton';
+import EndProjectDialog from './endProjectDialog';
 
 const key = 'projectDetail';
 
 export const ProjectDetail = ({
   onLoad,
   onAccept,
+  onOpenDonation,
+  onEndProject,
   isAccepted,
   address, //creator address
   match,
   project,
   percentAccepted,
+  donationDialog,
+  endDialog,
 }) => {
   const classes = useStyle();
   useInjectReducer({ key, reducer });
@@ -66,8 +73,9 @@ export const ProjectDetail = ({
 
   return (
     <div className={classes.container}>
-      <CreateDonation />
-      <CreateDisbursement />
+      <CreateDonation {...donationDialog} address={project.address} />
+      <CreateDisbursement  />
+      <EndProjectDialog {...endDialog} />
       <MyAppBar />
       <Grid container>
         <Grid container item xs={8} alignItems="flex-start">
@@ -76,7 +84,7 @@ export const ProjectDetail = ({
               title={project.name}
               action={
                 project.status !== 2 &&
-                isOwner && <ColorButton fullWidth>End Project</ColorButton>
+                isOwner && <ColorButton onClick={onEndProject} fullWidth>End Project</ColorButton>
               }
               classes={{
                 title: classes.cardTitle,
@@ -113,7 +121,7 @@ export const ProjectDetail = ({
               />
               <Information
                 title="Approval Rate:"
-                content={`${percentAccepted.toFixed(2)}%`}
+                content={`${percentAccepted.toFixed(2) * 100}%`}
                 customColor={getColorFromStatusCode(project.status)}
                 isBold
               />
@@ -133,7 +141,7 @@ export const ProjectDetail = ({
           style={{ padding: '2% 2% 0% 2%' }}
           alignItems="flex-start"
         >
-          {isLogin && !isOwner && (
+          {isLogin && !isOwner && project.status === 0 && (
             <>
               <MyCard
                 title={isAccepted ? 'Accepted' : 'Accept'}
@@ -156,9 +164,10 @@ export const ProjectDetail = ({
             <MyCard
               title="Donate"
               content=""
-              helper="donate to this project"
-              color="#2196f3"
+              helper={project.status === 1 ? "donate to this project" : "you cannot donate to this project"}
+              color={project.status === 1 ? "#2196f3" : "#bdbdbd"}
               icon={<SendIcon className={classes.icon} />}
+              onClick={project.status === 1 ? onOpenDonation : () => {}}
             />
           )}
 
@@ -226,12 +235,16 @@ const mapStateToProps = createStructuredSelector({
   percentAccepted: makeSelectPercentAccepted(),
   address: makeSelectAddress(),
   isAccepted: makeSelectIsAccepted(),
+  donationDialog: makeSelectDonationDialog(),
+  endDialog: makeSelectEndDialog()
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     onLoad: address => dispatch(onPageLoad(address)),
     onAccept: address => dispatch(onAccept(dispatch, address)),
+    onOpenDonation: () => dispatch(openDonationDialog(dispatch)),
+    onEndProject: () => dispatch(onEndProject(dispatch))
   };
 };
 
