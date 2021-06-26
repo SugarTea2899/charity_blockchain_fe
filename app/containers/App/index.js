@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import { makeStyles } from '@material-ui/core';
@@ -20,11 +20,21 @@ import UserProjectPage from '../UserProjectPage';
 import UserDonationPage from '../UserDonationPage';
 import ProjectDonationsPage from '../ProjectDonationPage';
 import ProjectDisbursementPage from '../ProjectDisbursementPage';
+import socket from '../../utils/socketClient';
 
 export function App({ alert, confirmAlert }) {
   const classes = useStyles();
   const globalState = useSelector(state => state.global);
 
+  useEffect(() => {
+    socket.on('message', (message) => {
+      console.log(message.type, '--------------------------------------------------------------');
+    });
+
+    return () => {
+      socket.off('message');
+    }
+  }, [])
   return (
     <div className={classes.container}>
       {globalState.loading && <LoadingIndicator />}
