@@ -42,7 +42,7 @@ export const getColorFromStatusCode = statusCode => {
     case 0:
       return 'red';
     case 1:
-      return '#66bb6a';
+      return '#00e676';
     case 2:
       return '#bdbdbd';
     default:

@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { setLoading } from '../App/actions';
-import { loadExploreProject, onLoadExploreDonation, onLoadExploreProject } from './actions';
+import { loadExploreDonation, loadExploreProject, onLoadExploreDonation, onLoadExploreProject } from './actions';
 import {
   ON_LOAD_EXPLORE_DONATION,
   ON_LOAD_EXPLORE_PROJECT,
@@ -28,7 +28,21 @@ export function* loadExploreProjectSaga() {
   }
 }
 
-export function* loadExploreDonationSaga() {}
+export function* loadExploreDonationSaga() {
+  try {
+    yield put(setLoading(true));
+
+    const result = yield call(API.getDonations);
+    
+    const exploreDonations = result.payload.history.reverse().filter((item, index) => index < 5);
+    yield put(loadExploreDonation(exploreDonations));
+
+    yield put(setLoading(false));
+  } catch (error) {
+    console.log(error.message);
+    yield put(setLoading(false));
+  }
+}
 
 export default function* exploreSaga() {
   yield takeLatest(ON_PAGE_LOAD, onPageLoad);

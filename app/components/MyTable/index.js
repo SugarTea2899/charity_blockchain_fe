@@ -460,12 +460,13 @@ export default function MyTable({projects}) {
     };
 
     useEffect(()=>{
+        stt = 0;
         const temp = projects.map((project=>{
             return createData(project.event.name,project.event.startDate,project.event.endDate,project.event.amountDonated,project.event.status)
         }));
         setData(temp);
         setRows(temp.slice());
-    },[])
+    },[projects])
 
     const filterData = (value) => {
         if (value) {

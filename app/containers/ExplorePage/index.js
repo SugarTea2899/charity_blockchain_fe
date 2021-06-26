@@ -32,7 +32,17 @@ export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
 
   const getProjectsItem = () => {
     return exploreProjects.map((project, index) => (
-      <ProjectItemExpand key={index} {...project.event} percentAccepted={project.percentAccepted} />
+      <ProjectItemExpand
+        key={index}
+        {...project.event}
+        percentAccepted={project.percentAccepted}
+      />
+    ));
+  };
+
+  const getDonationsItem = () => {
+    return exploreDonations.map((donation, index) => (
+      <DonateItemExpand key={index} {...donation} />
     ));
   };
 
@@ -40,20 +50,14 @@ export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
     <div className={classes.container}>
       <MyAppBar />
       <Grid container spacing={2} style={{ padding: '2%' }}>
-        <Grid container item xs={6} alignItems='flex-start'>
+        <Grid container item xs={6} alignItems="flex-start">
           <MyList
             title="Donations"
-            item={[
-              <DonateItemExpand />,
-              <DonateItemExpand />,
-              <DonateItemExpand />,
-              <DonateItemExpand />,
-              <DonateItemExpand />,
-            ]}
+            item={getDonationsItem()}
             onClick={() => {}}
           />
         </Grid>
-        <Grid container item xs={6} alignItems='flex-start'>
+        <Grid container item xs={6} alignItems="flex-start">
           <MyList
             title="Charity Projects"
             item={getProjectsItem()}
