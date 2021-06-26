@@ -26,12 +26,12 @@ export const ProjectItemExpand = ({name, address, timestamp, status, amountDonat
         <Grid container item xs={4} justify="center" direction="column">
           <Typography
             className={classes.blueText}
-            style={{ color: 'red', fontWeight: 'bold' }}
+            style={{ color: getColorFromStatusCode(status), fontWeight: 'bold' }}
           >
             <span style={{ color: 'black', fontWeight: 'normal' }}>
               Approval Rate:{' '}
             </span>{' '}
-            {`${percentAccepted.toFixed(2)}%`}
+            {`${percentAccepted.toFixed(2) * 100}%`}
           </Typography>
           <Typography
             className={classes.blueText}

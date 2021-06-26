@@ -5,13 +5,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ProjectDonationTable from '../../components/ProjectDonationTable';
 import MyAppBar from '../../components/MyAppBar';
+import DonationTable from '../../components/DonationTable';
+import { makeSelectProjectDonations } from '../ProjectExplore/selectors';
 
-export const ProjectDonationsPage = () => {
+export const ProjectDonationsPage = ({donations}) => {
   const classes = useStyle();
   return (
     <div className={classes.container}>
       <MyAppBar/>
-      <ProjectDonationTable/>
+      <DonationTable donations={donations} />
     </div>
   );
 };
@@ -27,7 +29,9 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  donations: makeSelectProjectDonations()
+});
 
 const mapDispatchToProps = dispatch => {return {}};
 

@@ -52,9 +52,9 @@ export const ExplorePage = ({ onLoad, exploreProjects, exploreDonations }) => {
       <Grid container spacing={2} style={{ padding: '2%' }}>
         <Grid container item xs={6} alignItems="flex-start">
           <MyList
-            title="Donations"
+            title="Donations" 
             item={getDonationsItem()}
-            onClick={() => {}}
+            onClick={() => history.push('/donations')}
           />
         </Grid>
         <Grid container item xs={6} alignItems="flex-start">

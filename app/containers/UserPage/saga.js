@@ -78,8 +78,10 @@ export function* onLoad() {
         localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY),
       );
       
-      console.log(userDonationsRes)
-      yield put(updateUserInfo(result.payload.address, result.payload.balance));
+      let amountDonated = 0;
+      userDonationsRes.payload.transactions.forEach((item) => amountDonated += item.amount);
+
+      yield put(updateUserInfo(result.payload.address, result.payload.balance, amountDonated));
       yield put(updateUserProjects(userProjectsRes.payload.events.reverse()));
       yield put(
         updateUserDonations(userDonationsRes.payload.transactions.reverse()),

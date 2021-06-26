@@ -9,6 +9,12 @@ const makeSelectAddress = () =>
     userState => userState.address,
   );
 
+const makeSelectAmountDonated = () =>
+  createSelector(
+    selectUser,
+    userState => userState.amountDonated,
+  );
+
 const makeSelectBalance = () =>
   createSelector(
     selectUser,
@@ -46,4 +52,5 @@ export {
   makeSelectUserProject,
   makeSelectAddAmountDialog,
   makeSelectUserDonations,
+  makeSelectAmountDonated
 };

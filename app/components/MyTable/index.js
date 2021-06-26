@@ -360,7 +360,7 @@ const StyledTableCell = withStyles(theme => ({
 
 const useStyles = makeStyles({
     root: {
-        margin: '5% 2% 10% 2%',
+        margin: '2.5% 2% 10% 2%',
     },
     container: {
         maxWidth: '100%',

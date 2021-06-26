@@ -11,10 +11,11 @@ import {
   UPDATE_USER_PROJECTS,
 } from './constants';
 
-export const updateUserInfo = (address, balance) => ({
+export const updateUserInfo = (address, balance, amountDonated) => ({
   type: UPDATE_USER_INFO,
   address,
   balance,
+  amountDonated
 });
 
 export const updateCreateProjectDialog = dialog => ({

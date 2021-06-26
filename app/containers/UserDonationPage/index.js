@@ -5,13 +5,18 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import UserDonationTable from '../../components/UserDonationTable';
 import MyAppBar from '../../components/MyAppBar';
+import { makeSelectUserDonations } from '../UserPage/selectors';
+import DonationTable from '../../components/DonationTable';
 
-export const UserDonationPage = () => {
+export const UserDonationPage = ({ donations }) => {
   const classes = useStyle();
+
+  const formatDonations = () =>
+    donations.map(donation => ({ ...donation, name: donation.nameEvent }));
   return (
     <div className={classes.container}>
-      <MyAppBar/>
-      <UserDonationTable/>
+      <MyAppBar />
+      <DonationTable donations={formatDonations()} hideFromColumn />
     </div>
   );
 };
@@ -27,9 +32,13 @@ const useStyle = makeStyles({
   },
 });
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  donations: makeSelectUserDonations(),
+});
 
-const mapDispatchToProps = dispatch => {return {}};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
 const withConnect = connect(
   mapStateToProps,

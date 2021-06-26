@@ -14,6 +14,7 @@ import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
 import { makeSelectProjectDetail } from '../ProjectDetail/selectors';
+import history from '../../utils/history';
 
 const key = 'projectExplore';
 
@@ -42,7 +43,7 @@ export const ProjectExplore = ({ donations, getDonations, match, project }) => {
           <MyList
             title="Project Donations"
             item={getDonationsItem()}
-            onClick={() => {}}
+            onClick={() => history.push(`/projects/${project.address}/donations`)}
           />
         </Grid>
         <Grid container item xs={6} alignItems="flex-start">

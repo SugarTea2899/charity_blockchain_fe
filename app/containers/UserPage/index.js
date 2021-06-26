@@ -21,6 +21,7 @@ import { useInjectReducer } from '../../utils/injectReducer';
 import {
   makeSelectAddAmountDialog,
   makeSelectAddress,
+  makeSelectAmountDonated,
   makeSelectBalance,
   makeSelectCreateProject,
   makeSelectUserDonations,
@@ -40,6 +41,7 @@ const key = 'user';
 
 export const UserPage = ({
   address,
+  amountDonated,
   balance,
   userProjects,
   userDonations,
@@ -98,7 +100,7 @@ export const UserPage = ({
         <Grid container item xs={4}>
           <MyCard
             title="Amount Donated"
-            content="500000"
+            content={amountDonated}
             color="#303f9f"
             icon={<MonetizationOnIcon className={classes.icon} />}
           />
@@ -114,7 +116,7 @@ export const UserPage = ({
           <MyList
             title="Your donations"
             item={getDonationItems()}
-            onClick={() => {}}
+            onClick={() => history.push('/user/donations')}
           />
         </Grid>
         <Grid container item xs={4}>
@@ -166,6 +168,7 @@ const mapStateToProps = createStructuredSelector({
   userProjects: makeSelectUserProject(),
   userDonations: makeSelectUserDonations(),
   addAmountDialog: makeSelectAddAmountDialog(),
+  amountDonated: makeSelectAmountDonated()
 });
 
 const mapDispatchToProps = dispatch => {

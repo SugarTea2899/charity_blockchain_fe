@@ -9,6 +9,7 @@ import {
 export const initialState = {
   address: '',
   balance: 0,
+  amountDonated: 0,
   projects: [],
   donations: [],
   createProjectDialog: {
@@ -26,7 +27,12 @@ export const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER_INFO:
-      return { ...state, address: action.address, balance: action.balance };
+      return {
+        ...state,
+        address: action.address,
+        balance: action.balance,
+        amountDonated: action.amountDonated,
+      };
     case UPDATE_CREATE_PROJECT_DIALOG:
       return { ...state, createProjectDialog: action.dialog };
     case UPDATE_USER_PROJECTS:
