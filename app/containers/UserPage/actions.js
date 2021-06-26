@@ -1,7 +1,10 @@
 import {
+  ADD_AMOUNT,
   CREATE_PROJECT_REQUEST,
   ON_CREATE_PROJECT_DIALOG,
   ON_PAGE_LOAD,
+  OPEN_ADD_AMOUNT_DIALOG,
+  UPDATE_ADD_AMOUNT_DIALOG,
   UPDATE_CREATE_PROJECT_DIALOG,
   UPDATE_USER_INFO,
   UPDATE_USER_PROJECTS,
@@ -36,4 +39,19 @@ export const updateUserProjects = projects => ({
 
 export const onPageLoad = () => ({
   type: ON_PAGE_LOAD,
+});
+
+export const updateAddAmountDialog = (addAmountDialog) => ({
+  type: UPDATE_ADD_AMOUNT_DIALOG,
+  addAmountDialog
+})
+
+export const openAddAmountDialog = (dispatch) => ({
+  type: OPEN_ADD_AMOUNT_DIALOG,
+  dispatch
+});
+
+export const addAmount = (amount) => ({
+  type: ADD_AMOUNT,
+  amount
 });

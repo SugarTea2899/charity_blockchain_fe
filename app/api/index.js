@@ -45,5 +45,9 @@ export const getProjectDonations = (address) => {
 }
 
 export const endProject = (projectPrivateKey) => {
-  return fetchData('post', 'event/end', undefined, projectPrivateKey);
+  return fetchData('post', '/event/end', undefined, projectPrivateKey);
+}
+
+export const addAmount = (amount, privateKey) => {
+  return fetchData('post', '/wallet/add', {amount}, privateKey)
 }

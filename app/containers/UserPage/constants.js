@@ -9,3 +9,9 @@ export const CREATE_PROJECT_REQUEST = 'user/CREATE_PROJECT';
 export const UPDATE_USER_PROJECTS = 'user/UPDATE_USER_PROJECTS';
 
 export const ON_PAGE_LOAD = 'user/ON_PAGE_LOAD';
+
+export const UPDATE_ADD_AMOUNT_DIALOG = 'user/UPDATE_ADD_AMOUNT_DIALOG';
+
+export const OPEN_ADD_AMOUNT_DIALOG = 'user/OPEN_ADD_AMOUNT_DIALOG';
+
+export const ADD_AMOUNT = 'user/ADD_AMOUNT';

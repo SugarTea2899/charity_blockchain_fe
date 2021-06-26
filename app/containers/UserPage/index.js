@@ -19,15 +19,17 @@ import reducer from './reducer';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
 import {
+  makeSelectAddAmountDialog,
   makeSelectAddress,
   makeSelectBalance,
   makeSelectCreateProject,
   makeSelectUserProject,
 } from './selectors';
 import CreateProject from './CreateProject';
-import { onCreateProjectDialog, onPageLoad } from './actions';
+import { onCreateProjectDialog, onPageLoad, openAddAmountDialog } from './actions';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import history from '../../utils/history';
+import AddAmount from './AddAmount';
 
 const key = 'user';
 
@@ -36,8 +38,10 @@ export const UserPage = ({
   balance,
   userProjects,
   createProjectDialog,
+  addAmountDialog,
   onCreateProject,
   onLoad,
+  onAddAmount
 }) => {
   const classes = useStyle();
   useInjectReducer({ key, reducer });
@@ -58,6 +62,7 @@ export const UserPage = ({
     <div className={classes.container}>
       <MyAppBar />
       <CreateProject {...createProjectDialog} />
+      <AddAmount {...addAmountDialog} />
       <Grid container spacing={2} style={{ padding: '2% 2% 0% 2%' }}>
         <Grid container item xs={4}>
           <MyCard
@@ -118,6 +123,7 @@ export const UserPage = ({
             content=""
             helper="deposit money into your account"
             icon={<PaymentIcon className={classes.icon} />}
+            onClick={onAddAmount}
           />
           <MyCard
             color="#00897b"
@@ -150,12 +156,14 @@ const mapStateToProps = createStructuredSelector({
   balance: makeSelectBalance(),
   createProjectDialog: makeSelectCreateProject(),
   userProjects: makeSelectUserProject(),
+  addAmountDialog: makeSelectAddAmountDialog()
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     onCreateProject: () => dispatch(onCreateProjectDialog(dispatch)),
     onLoad: () => dispatch(onPageLoad()),
+    onAddAmount: () => dispatch(openAddAmountDialog(dispatch))
   };
 };
 
