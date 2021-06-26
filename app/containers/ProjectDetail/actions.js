@@ -70,7 +70,7 @@ export const openDisbursementDialog = dispatch => ({
   dispatch,
 });
 
-export const sendDisbursement = (dispatch, amount) => ({
+export const sendDisbursement = (dispatch, amount, projectPrivateKey) => ({
   type: SEND_DISBURSEMENT_DIALOG,
   amount,
   dispatch,

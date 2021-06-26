@@ -1,4 +1,5 @@
 import {
+  UPDATE_DISBURSEMENT_DIALOG,
   UPDATE_DONATION_DIALOG,
   UPDATE_END_DIALOG,
   UPDATE_IS_ACCEPTED,
@@ -49,6 +50,8 @@ const projectDetailReducer = (state = initialState, action) => {
       return { ...state, donationDialog: action.donationDialog };
     case UPDATE_END_DIALOG:
       return { ...state, endDialog: action.endDialog };
+    case UPDATE_DISBURSEMENT_DIALOG:
+      return {...state, disbursementDialog: action.disbursementDialog}
     default:
       return state;
   }

@@ -13,6 +13,7 @@ import {
 import {
   ADD_AMOUNT,
   CREATE_PROJECT_REQUEST,
+  ON_COPY_ADDRESS,
   ON_CREATE_PROJECT_DIALOG,
   ON_PAGE_LOAD,
   OPEN_ADD_AMOUNT_DIALOG,
@@ -20,6 +21,7 @@ import {
 import * as API from '../../api';
 import { LOCAL_STORAGE_PRIVATE_KEY } from '../../utils/constants';
 import history from '../../utils/history';
+import { copyToClipboard } from '../../utils/helpers';
 
 export function* showCreateProjectDialog({ dispatch }) {
   const dialog = {
@@ -123,10 +125,24 @@ export function* addAmountSaga({ amount }) {
   }
 }
 
+export function* copyAddress({address, dispatch}) {
+  copyToClipboard(address);
+  console.log(address);
+  const alert = {
+    open: true,
+    title: 'Alert',
+    content: `Your address is copied to clipboard`,
+    onClose: () => dispatch(updateAlert({ open: false })),
+  };
+
+  yield put(updateAlert(alert));
+}
+
 export default function* userSaga() {
   yield takeLatest(ON_CREATE_PROJECT_DIALOG, showCreateProjectDialog);
   yield takeLatest(CREATE_PROJECT_REQUEST, createProject);
   yield takeLatest(ON_PAGE_LOAD, onLoad);
   yield takeLatest(OPEN_ADD_AMOUNT_DIALOG, openAddAmountDialog);
   yield takeLatest(ADD_AMOUNT, addAmountSaga);
+  yield takeLatest(ON_COPY_ADDRESS, copyAddress);
 }

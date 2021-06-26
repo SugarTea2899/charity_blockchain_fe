@@ -1,6 +1,7 @@
 import {
   ADD_AMOUNT,
   CREATE_PROJECT_REQUEST,
+  ON_COPY_ADDRESS,
   ON_CREATE_PROJECT_DIALOG,
   ON_PAGE_LOAD,
   OPEN_ADD_AMOUNT_DIALOG,
@@ -63,3 +64,8 @@ export const addAmount = amount => ({
   amount,
 });
 
+export const onCopyAddress = (address, dispatch) => ({
+  type: ON_COPY_ADDRESS,
+  address,
+  dispatch
+});

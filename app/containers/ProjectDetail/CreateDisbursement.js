@@ -11,19 +11,32 @@ import { ColorButton } from '../../components/ColorButton';
 import { useSelector } from 'react-redux';
 import { TramRounded } from '@material-ui/icons';
 
-const CreateDisbursement = ({ open, onClose, onSend }) => {
+const CreateDisbursement = ({ open, onClose, onSend, remain }) => {
   const classes = useStyle();
   const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState('');
+  const [reason, setReason] = useState('');
+  const [reasonError, setReasonError] = useState('');
+  const [privateKey, setPrivateKey] = useState('');
+  const [privateKeyError, setPrivateKeyError] = useState('');
 
-  // const balance = useSelector(makeSelectBalance());
+  useEffect(() => {
+    if (amount <= remain) setAmountError('');
+    else setAmountError('Your project is not enough coin to disburse');
+  }, [amount]);
 
-  // useEffect(() => {
-  //   if (amount <= balance) setAmountError('');
-  //   else setAmountError('You not enough coin to send');
-  // }, [amount]);
+  useEffect(() => {
+    if (reason.length > 0) setReasonError('');
+    else setReasonError('Reason is not empty');
+  }, [reason]);
+
+  useEffect(() => {
+    if (privateKey.length === 64) setPrivateKeyError('');
+    else setPrivateKeyError('Project private key is not valid.');
+  }, [privateKey]);
+
   return (
-    <Dialog open={false} fullWidth onClose={onClose}>
+    <Dialog open={open} fullWidth onClose={onClose}>
       <DialogTitle>{'Disbursement'}</DialogTitle>
       <DialogContent>
         <TextField
@@ -39,7 +52,20 @@ const CreateDisbursement = ({ open, onClose, onSend }) => {
         <TextField
           style={{ marginBottom: '2%' }}
           fullWidth
+          value={privateKey}
+          onChange={e => setPrivateKey(e.target.value)}
+          helperText={privateKeyError}
+          error={privateKeyError !== ''}
+          label="Project Private Key"
+        />
+        <TextField
+          style={{ marginBottom: '2%' }}
+          fullWidth
           label="Reason"
+          value={reason}
+          onChange={e => setReason(e.target.value)}
+          helperText={reasonError}
+          error={reasonError !== ''}
         />
       </DialogContent>
       <DialogActions>

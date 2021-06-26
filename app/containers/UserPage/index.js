@@ -29,6 +29,7 @@ import {
 } from './selectors';
 import CreateProject from './CreateProject';
 import {
+  onCopyAddress,
   onCreateProjectDialog,
   onPageLoad,
   openAddAmountDialog,
@@ -50,6 +51,7 @@ export const UserPage = ({
   onCreateProject,
   onLoad,
   onAddAmount,
+  onCopy,
 }) => {
   const classes = useStyle();
   useInjectReducer({ key, reducer });
@@ -69,7 +71,7 @@ export const UserPage = ({
     return userDonations
       .filter((item, index) => index < 5)
       .map((item, index) => <DonateItem key={index} {...item} />);
-  }
+  };
 
   if (!localStorage.getItem(LOCAL_STORAGE_PRIVATE_KEY)) {
     history.push('/');
@@ -87,6 +89,7 @@ export const UserPage = ({
             content={address}
             color="#2962ff"
             icon={<ContactsIcon className={classes.icon} />}
+            onClick={() => onCopy(address)}
           />
         </Grid>
         <Grid container item xs={4}>
@@ -168,7 +171,7 @@ const mapStateToProps = createStructuredSelector({
   userProjects: makeSelectUserProject(),
   userDonations: makeSelectUserDonations(),
   addAmountDialog: makeSelectAddAmountDialog(),
-  amountDonated: makeSelectAmountDonated()
+  amountDonated: makeSelectAmountDonated(),
 });
 
 const mapDispatchToProps = dispatch => {
@@ -176,6 +179,7 @@ const mapDispatchToProps = dispatch => {
     onCreateProject: () => dispatch(onCreateProjectDialog(dispatch)),
     onLoad: () => dispatch(onPageLoad()),
     onAddAmount: () => dispatch(openAddAmountDialog(dispatch)),
+    onCopy: address => dispatch(onCopyAddress(address, dispatch)),
   };
 };
 

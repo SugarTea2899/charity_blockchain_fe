@@ -18,3 +18,5 @@ export const UPDATE_ADD_AMOUNT_DIALOG = 'user/UPDATE_ADD_AMOUNT_DIALOG';
 export const OPEN_ADD_AMOUNT_DIALOG = 'user/OPEN_ADD_AMOUNT_DIALOG';
 
 export const ADD_AMOUNT = 'user/ADD_AMOUNT';
+
+export const ON_COPY_ADDRESS = 'user/ON_COPY_ADDRESS';

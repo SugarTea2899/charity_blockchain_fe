@@ -1,11 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { setLoading, updateAlert, updateConfirmAlert } from '../App/actions';
 import * as API from '../../api';
-import { ACCEPT_PROJECT, END_PROJECT, ON_ACCEPT, ON_END_PROJECT, ON_PAGE_LOAD, OPEN_DONATION_DIALOG, SEND_DONATION_DIALOG } from './constants';
+import { ACCEPT_PROJECT, END_PROJECT, ON_ACCEPT, ON_END_PROJECT, ON_PAGE_LOAD, OPEN_DISBURSEMENT_DIALOG, OPEN_DONATION_DIALOG, SEND_DISBURSEMENT_DIALOG, SEND_DONATION_DIALOG } from './constants';
 import {
   acceptProject,
   endProject,
+  sendDisbursement,
   sendDonation,
+  updateDisbursementDialog,
   updateDonationDialog,
   updateEndDialog,
   updateIsAccepted,
@@ -129,6 +131,20 @@ export function* endProjectSaga({projectPrivateKey}) {
   }
 }
 
+export function* openDisbursementDialog ({dispatch}) {
+  const dialog = {
+    open: true,
+    onClose: () => dispatch(updateDisbursementDialog({open: false})),
+    onSend: (amount, projectPrivateKey) => dispatch(sendDisbursement(dispatch, amount, projectPrivateKey))
+  };
+
+  yield put(updateDisbursementDialog(dialog));
+}
+
+export function* sendDisbursementSaga({dispatch, amount, projectPrivateKey}) {
+
+}
+
 export default function* projectDetailSaga() {
   yield takeLatest(ON_PAGE_LOAD, onPageLoad);
   yield takeLatest(ON_ACCEPT, onAccept);
@@ -137,4 +153,6 @@ export default function* projectDetailSaga() {
   yield takeLatest(SEND_DONATION_DIALOG, sendDonationSaga);
   yield takeLatest(ON_END_PROJECT, endProjectConfirm);
   yield takeLatest(END_PROJECT, endProjectSaga);
+  yield takeLatest(OPEN_DISBURSEMENT_DIALOG, openDisbursementDialog);
+  yield takeLatest(SEND_DISBURSEMENT_DIALOG, sendDisbursementSaga)
 }
